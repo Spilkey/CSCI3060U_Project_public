@@ -17,5 +17,5 @@ with open('tests.csv', 'rb') as csvfile:
             file.write(row[1])
             file.close()
             file = open(path + "test.out", 'w+')
-            file.write(row[2])
+            file.write(row[2].replace("_", " "))
             file.close()

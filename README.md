@@ -12,7 +12,9 @@
 - The plan is to run these tests with shell scripts
 - There will be a .log file that will be made in each test case folder that will store the actual outputs and that we can compare to the .out files which were anticipated
 - Extra (The makeTests.py and tests.csv were made to efficiently take the .inp and .out from our table and place it into their actual files)
-- Directory structure: (minimized)
+- The test.out files are the expected daily transaction files. We have made an expected Current User file and an expected Available Tickets file that are in the main directory.
+- The test folder also contains the current user accounts (users.ua) and the available tickets (stock.at) files respectively. 
+- Directory structure (minimized):
 ```
 └───tests
     ├───Addcredit_Account_Exist_AA
@@ -28,4 +30,9 @@
     └───Sell_Ticket_Number_SS
             test.inp
             test.out
+    │       
+    │
+    │
+    └───users.ua
+    └───stock.at
 ```
