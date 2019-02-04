@@ -2,14 +2,14 @@
 #include <string>
 #include "fileio.cpp"
 #include "user.cpp"
-
+#include <cstring>
 void log_transaction(std::string transaction, FileIO file_stream);
 User* login(std::string username);
 
 int* trans_size;         // The size of the transaction array
 std::string* trans_log;  // The array to contain the transactions
-const std::string curr_account_file = "users.ua";  // The location of the users file
-const std::string avail_tickets_file = "stock.at";  // The location of the stock file
+const std::string curr_account_file = "tests/users.ua";  // The location of the users file
+const std::string avail_tickets_file = "tests/stock.at";  // The location of the stock file
 FileIO file_stream(curr_account_file, avail_tickets_file); // The backend class
 
 int main() {

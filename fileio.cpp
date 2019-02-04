@@ -43,15 +43,7 @@ User* FileIO::readAccounts(char username[15]) {
 
         file.close();
         if (found == true) {
-            if (buff[1] == "AA") {
-                return new User(temp_username, atoi(buff[2].c_str()));
-            } else {
-                char acc_type[2];
-                acc_type[0] = buff[1][0];
-                acc_type[1] = buff[1][1];
-
-                return new Standard(temp_username, atoi(buff[2].c_str()), acc_type);
-            }
+          return new User(temp_username, atoi(buff[2].c_str()), buff[1] );
         }
     }
     return NULL;
