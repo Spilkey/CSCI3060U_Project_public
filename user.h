@@ -3,16 +3,18 @@
 
 class User {
    protected:
-    char user_name[15];
+    std::string user_name;
     std::string acc_type;
     int credit;
+    Admin* admin_commands;
 
    public:
-    User(char temp_name[15], int temp_credit, std::string account);
+    User(std::string temp_name, int temp_credit, std::string account);
     void addCredit(int tmp_credit);
 
     std::string getUserName();
     int getCredit();
+    std::string getUserType();
 };
 
 

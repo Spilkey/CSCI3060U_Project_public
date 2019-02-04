@@ -7,8 +7,8 @@ class FileIO {
     std::string avail_tickets_file;
 
    public:
-    FileIO(std::string account_file, std::string tickets_file);
-    User* readAccounts(char username[15]);
+    FileIO(std::string account_file, std::string tickets_file, std::string transaction_file);
+    User* readAccounts(std::string username);
 };
 
 #endif

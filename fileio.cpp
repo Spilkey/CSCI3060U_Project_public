@@ -5,13 +5,14 @@
 #include "user.h"
 #include "fileio.h"
 
-FileIO::FileIO(std::string account_file, std::string tickets_file) {
+FileIO::FileIO(std::string account_file, std::string tickets_file, std::string transaction_file) {
     // TODO - load the transaction file
+    daily_trans_file = transaction_file;
     curr_account_file = account_file;
     avail_tickets_file = tickets_file;
 }
 
-User* FileIO::readAccounts(char username[15]) {
+User* FileIO::readAccounts(std::string username) {
     std::string line;
     std::ifstream file;
     file.open(curr_account_file);
@@ -19,7 +20,6 @@ User* FileIO::readAccounts(char username[15]) {
     if (file.is_open()) {
         bool found = false;
         std::string buff[3];
-        char temp_username[15];
 
         while (std::getline(file, line) && found == false) {
             std::stringstream ss(line);
@@ -30,20 +30,17 @@ User* FileIO::readAccounts(char username[15]) {
                 i++;
             }
 
-            // Check if it matches the entered char array
-            found = true;
-            for (int i = 0; i < buff[0].size(); i++) {
-                if (buff[0][i] != username[i]) {
-                    found = false;
-                } else {
-                    temp_username[i] = buff[0][i];
-                }
+            // Check if it matches the string
+            if(buff[0] == username){
+                found = true;
+            } else {
+                found = false;
             }
         }
 
         file.close();
         if (found == true) {
-          return new User(temp_username, atoi(buff[2].c_str()), buff[1] );
+          return new User(buff[0], atoi(buff[2].c_str()), buff[1] );
         }
     }
     return NULL;

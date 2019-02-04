@@ -1,13 +1,17 @@
 #include <iostream>
 #include <string>
+#include "admin.h"
 #include "user.h"
 
-User::User(char temp_name[15], int temp_credit, std::string account) {
-    for(int i = 0; i < 15; i++){
-        user_name[i] = temp_name[i];
-    }
+User::User(std::string temp_name, int temp_credit, std::string account) {
+    user_name = temp_name;
     credit = temp_credit;
     acc_type = account;
+    if(acc_type == "AA"){
+        admin_commands = new Admin();
+    } else {
+        admin_commands = NULL;
+    }
 }
 
 void User::addCredit(int tmp_credit) {
@@ -21,4 +25,8 @@ std::string User::getUserName(){
 
 int User::getCredit() {
     return credit;
+}
+
+std::string User::getUserType(){
+    return acc_type;
 }
