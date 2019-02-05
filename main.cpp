@@ -1,9 +1,9 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-#include "admin.cpp"
-#include "fileio.cpp"
-#include "user.cpp"
+#include "admin.h"
+#include "user.h"
+#include "fileio.h"
 
 void log_transaction(std::string transaction, FileIO file_stream);
 User* login(std::string username);

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "admin.h"
 #include "user.h"
 #include "fileio.h"
 
