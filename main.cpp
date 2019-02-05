@@ -1,12 +1,16 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "admin.h"
 #include "user.h"
+#include "tickets.h"
 #include "fileio.h"
+
 
 void log_transaction(std::string transaction, FileIO file_stream);
 User* login(std::string username);
+Tickets* buy(std::string event_title, std::string seller_username);
 
 int* trans_size = new int(0);  // The array to contain the transactions
 std::string* trans_log =
@@ -105,6 +109,84 @@ int main() {
 
             if (acc_type != "SS" && command == "buy") {
                 // Run buy
+                //char event_chars[25];
+                std::string event_t;
+                std::string seller_username;
+                int num_of_tickets;
+                system("clear");
+
+
+
+                //cin.getline(input,sizeof(event_chars));
+
+                std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
+                std::cin.ignore();
+                std::getline (std::cin,event_t);
+
+                std::cout << "Please enter the user name who you will buying from: " << std::endl;
+                std::cin >> seller_username;
+
+                std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
+                std::cin >> num_of_tickets;
+
+                Tickets* current = new Tickets;
+                current = buy(event_t, seller_username);
+
+                if(current == NULL){
+                  error = "ERR: the information entered was not valid \n";
+
+                }else if(current->seller_username == curr_user->getUserName()){
+                  error = "ERR: you cannot buy from youself \n";
+
+                }else if(num_of_tickets > 4 && acc_type != "AA"){
+                  error = "ERR: you cannot purchase more than 4 tickets \n";
+
+                }else if(current->total_tickets < num_of_tickets){
+                  error = "ERR: you cannot purchace more than the total amount of tickets";
+
+                }else{
+                  std::cout << "The cost per ticket is " << current->price
+                  << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
+
+                  std::string choice;
+                  std::cout << "Do you wish to complete this transaction Y or N " << std::endl;
+                  std::cin >> choice;
+                  if(choice == "Y"){
+
+
+
+
+                    char rem_num_tickets [] = {'0','0','0'};
+                    int rem_tickets = current->total_tickets - num_of_tickets;
+
+                    if(rem_tickets != 100){
+                      rem_num_tickets[1] = (rem_tickets / 10) + 48;
+                      rem_num_tickets[2] = (rem_tickets - ((rem_num_tickets[1] - 48)*10)) + 48;
+                    }else{
+                      rem_num_tickets[0] = '1';
+                    }
+
+                    std::string log_price = std::to_string(current->price);
+
+
+
+                    std::stringstream ss;
+                    ss << "04 " << current->event_title << " " << current->seller_username << " " << rem_num_tickets << " " << log_price;
+                    std::string log = ss.str();
+
+                    std::cout << log << std::endl;
+
+
+
+
+                    //log_transaction(+current->price);
+                  }
+                }
+
+
+
+                command = "";
+
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
             } else if (acc_type != "AA" && command == "addcredit") {
@@ -148,4 +230,9 @@ User* login(std::string username) {
 
     // Return the user
     return file_stream.readAccounts(username);
+}
+
+Tickets* buy(std::string event_title, std::string seller_username){
+
+  return file_stream.readTickets(event_title, seller_username);
 }

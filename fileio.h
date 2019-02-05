@@ -9,6 +9,8 @@ class FileIO {
    public:
     FileIO(std::string account_file, std::string tickets_file, std::string transaction_file);
     User* readAccounts(std::string username);
+    Tickets* readTickets(std::string event_title, std::string seller_username);
+
 };
 
 #endif
