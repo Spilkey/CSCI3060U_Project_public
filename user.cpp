@@ -1,3 +1,10 @@
+/*
+@method addCredit() adds credit to the current user
+@method getUserName() returns user name of the current user
+@method getCredit() returns credit of current user
+@method getUserType() returns the user type (permissions) of the current user
+*/
+
 #include <iostream>
 #include <string>
 #include "admin.h"

@@ -35,4 +35,14 @@
     │
     └───users.ua
     └───stock.at
+```	
+# Phase 2 - How to run:
+
+- To compile the program use the make command to run the makefile
 ```
+make
+```
+- Then run the compiled program using ./ticket-seller
+- Follow the instructions in the terminal to use the program (ex: login)
+ 	
+	

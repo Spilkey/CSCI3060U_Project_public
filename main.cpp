@@ -1,3 +1,27 @@
+/*
+@author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+
+Program intention/purpose: Ticket buying/selling service for logged-in users.
+
+How to compile: In the CSCI3060U_Project directory run the makefile by
+using the "make" command in a terminal.
+
+To run the actual program in your terminal use the command:
+./ticket-seller
+
+Users can complete eight different transactions and use also the exit command:
+login, logout, create, delete, sell, buy, refund, addcredit,
+and type "exit" to end the program.
+Simply type these tranaction codes in the program to initiate each transaction's sequence.
+Once in the transaction sequence, just follow the instructions the program outputs to you.
+
+Input files:
+  tests/users.ua (the current users file)
+  tests/stock.at (the available tickets file)
+Output files:
+  trans.out (the daily transaction file)
+*/
+
 #include <cstring>
 #include <iostream>
 #include <string>
@@ -8,7 +32,6 @@
 #include "user.h"
 #include "tickets.h"
 #include "fileio.h"
-
 
 void log_transaction(std::string transaction, FileIO file_stream);
 User* login(std::string username);
@@ -26,6 +49,8 @@ const std::string avail_tickets_file =
     "tests/stock.at";  // The location of the stock file
 FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // The backend class
 
+// The filenames will be passed as command line arguments in the phase #3
+//int main(int argc, char** argv) {
 int main() {
     // Init variables
     User* curr_user = NULL;
@@ -118,8 +143,6 @@ int main() {
                 int num_of_tickets;
                 system("clear");
 
-
-
                 //cin.getline(input,sizeof(event_chars));
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
                 std::getline (std::cin,event_t);
@@ -163,7 +186,7 @@ int main() {
                     }else{
                       rem_num_tickets[0] = '1';
                     }
-                    
+
                     char log_price[] = {'0','0','0','.','0','0'};
                     log_price[0] = (current->price / 100) + 48;
                     log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;
@@ -185,8 +208,6 @@ int main() {
 
                     std::string log = ss.str();
 
-
-
                     std::cout << log << std::endl;
 
                     error = "Transaction Completed!!\n";
@@ -204,12 +225,11 @@ int main() {
                 // Run addcredit for non admins
             } else if (command == "logout") {
                 // Write transactions
-
+                // TODO
                 // Remove user from variable
                 curr_user = NULL;
             } else {
                 error = "ERR: Command not found; Please try again.\n";
-
             }
         }
     }
@@ -235,7 +255,6 @@ void log_transaction(std::string transaction) {
 User* login(std::string username) {
     // Check the username for valid characters
     // TODO
-
     if (username.size() > 15 || username.size() <= 0) {
         return NULL;
     } else if (username.size() <= 15) {
