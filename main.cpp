@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <stdlib.h>
 #include <math.h>
 #include "admin.h"
 #include "user.h"
@@ -75,7 +76,7 @@ int main() {
         std::cout << "\nPlease enter a command:" << std::endl;
 
         // Wait for user response
-        std::cin >> command;
+        std::getline (std::cin,command);
 
         // Process the command entered
         if (curr_user == NULL) {
@@ -87,7 +88,7 @@ int main() {
                 system("clear");
 
                 std::cout << "Please enter a valid username:" << std::endl;
-                std::cin >> command;
+                std::getline (std::cin,command);
 
                 curr_user = login(command);
                 if (curr_user == NULL) {
@@ -120,16 +121,15 @@ int main() {
 
 
                 //cin.getline(input,sizeof(event_chars));
-
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
-                std::cin.ignore();
                 std::getline (std::cin,event_t);
 
                 std::cout << "Please enter the user name who you will buying from: " << std::endl;
-                std::cin >> seller_username;
+                std::getline (std::cin,seller_username);
 
                 std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
-                std::cin >> num_of_tickets;
+                std::getline (std::cin,command);
+                num_of_tickets = atoi(command.c_str());
 
                 Tickets* current = new Tickets;
                 current = buy(event_t, seller_username);
@@ -152,7 +152,7 @@ int main() {
 
                   std::string choice;
                   std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
-                  std::cin >> choice;
+                  std::getline (std::cin,choice);
                   if(choice == "yes"){
                     char rem_num_tickets [3] = {'0','0','0'};
                     int rem_tickets = current->total_tickets - num_of_tickets;
@@ -238,6 +238,10 @@ User* login(std::string username) {
 
     if (username.size() > 15 || username.size() <= 0) {
         return NULL;
+    } else if (username.size() <= 15) {
+        for(int i = username.size(); i < 15; i++){
+            username += ' ';
+        }
     }
 
     // Return the user
