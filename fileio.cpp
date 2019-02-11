@@ -84,7 +84,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
 
         file.close();
         if (found == true) {
-          //std::cout << "in found" << std::endl;
+          //creating new stuct to hold the tickets information
+          //and pass the stuct back to main.cpp
           Tickets *t =  new Tickets;
           t->event_title = buff[0];
           t->seller_username = buff[1];

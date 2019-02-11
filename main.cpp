@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <math.h>
 #include "admin.h"
 #include "user.h"
 #include "tickets.h"
@@ -80,6 +81,7 @@ int main() {
         if (curr_user == NULL) {
             if (command == "exit") {
                 exit = true;
+
             } else if (command == "login") {
                 // Clear the screen
                 system("clear");
@@ -149,43 +151,52 @@ int main() {
                   << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
 
                   std::string choice;
-                  std::cout << "Do you wish to complete this transaction Y or N " << std::endl;
+                  std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
                   std::cin >> choice;
-                  if(choice == "Y"){
-
-
-
-
-                    char rem_num_tickets [] = {'0','0','0'};
+                  if(choice == "yes"){
+                    char rem_num_tickets [3] = {'0','0','0'};
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
                     if(rem_tickets != 100){
                       rem_num_tickets[1] = (rem_tickets / 10) + 48;
-                      rem_num_tickets[2] = (rem_tickets - ((rem_num_tickets[1] - 48)*10)) + 48;
+                      rem_num_tickets[2] = (rem_tickets - (rem_num_tickets[1] - 48)*10) + 48;
                     }else{
                       rem_num_tickets[0] = '1';
                     }
+                    
+                    char log_price[] = {'0','0','0','.','0','0'};
+                    log_price[0] = (current->price / 100) + 48;
+                    log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;
+                    log_price[2] = ((current->price - ((log_price[0] - 48)*100)) -
+                                                      ((log_price[1] - 48)*10)) + 48;
 
-                    std::string log_price = std::to_string(current->price);
+                    float rounded;
+                    int right_side_price_log = (int)((modf(current->price, &rounded))*100);
+                    log_price[4]= (right_side_price_log / 10) + 48;
+                    log_price[5] = (right_side_price_log- (log_price[4] - 48)*10) + 48;
 
-
-
+                    std::cout << "log price is " << log_price << std::endl;
+                    std::cout << "remaining tickets is " << rem_num_tickets << std::endl;
+                    //std::string log_price = std::to_string(current->price);
                     std::stringstream ss;
-                    ss << "04 " << current->event_title << " " << current->seller_username << " " << rem_num_tickets << " " << log_price;
+                    ss << "04 " << current->event_title << " "
+                       << current->seller_username << " "
+                       << rem_num_tickets; //<< " " << log_price;
+
                     std::string log = ss.str();
+
+
 
                     std::cout << log << std::endl;
 
-
-
-
+                    error = "Transaction Completed!!\n";
                     //log_transaction(+current->price);
+                  }else{
+                    error = "Transaction Canceled!!\n";
                   }
                 }
-
-
-
-                command = "";
+                delete current;
+                //command = "";
 
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
@@ -198,10 +209,11 @@ int main() {
                 curr_user = NULL;
             } else {
                 error = "ERR: Command not found; Please try again.\n";
+
             }
         }
     }
-
+    delete curr_user;
     return 0;
 }
 
