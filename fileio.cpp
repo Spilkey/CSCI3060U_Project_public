@@ -25,16 +25,25 @@ User* FileIO::readAccounts(std::string username) {
         std::string buff[3];
 
         while (std::getline(file, line) && found == false) {
+            buff[0] = "";
+            for (int i = 0; i < 15; i++) {
+                buff[0] += line[i];
+                line[i] = 0;
+            }
+            line[15] = 0;
+
+            std::cout << line << std::endl;
+
             std::stringstream ss(line);
 
             // Load the line's information into the buffer
-            int i = 0;
+            int i = 1;
             while (ss >> buff[i]) {
                 i++;
             }
 
             // Check if it matches the string
-            if(buff[0] == username){
+            if (buff[0] == username) {
                 found = true;
             } else {
                 found = false;
@@ -43,11 +52,10 @@ User* FileIO::readAccounts(std::string username) {
 
         file.close();
         if (found == true) {
-          return new User(buff[0], atoi(buff[2].c_str()), buff[1] );
+            return new User(buff[0], atoi(buff[2].c_str()), buff[1]);
         }
     }
     return NULL;
-
 }
 Tickets* FileIO::readTickets(std::string event_title, std::string seller_username){
     std::string line;
