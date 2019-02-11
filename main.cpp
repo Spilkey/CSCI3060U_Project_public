@@ -163,7 +163,7 @@ int main() {
                     }else{
                       rem_num_tickets[0] = '1';
                     }
-                    
+                    //could probably put this into a function
                     char log_price[] = {'0','0','0','.','0','0'};
                     log_price[0] = (current->price / 100) + 48;
                     log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;

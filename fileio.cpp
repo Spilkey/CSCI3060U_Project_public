@@ -73,6 +73,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
             //
             // std::cout << file_event << std::endl;
             // std::cout << file_seller << std::endl;
+
+            //if the seller username and event title is found
             if((seller_username == file_seller) && (event_title == file_event)){
                 found = true;
                 buff[0] = file_event;
