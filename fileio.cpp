@@ -23,6 +23,7 @@ FileIO::FileIO(std::string account_file, std::string tickets_file, std::string t
     avail_tickets_file = tickets_file;
 }
 
+// reads the current accounts file (users.ua) and returns a instance of the user class
 User* FileIO::readAccounts(std::string username) {
     std::string line;
     std::ifstream file;
@@ -65,6 +66,8 @@ User* FileIO::readAccounts(std::string username) {
     }
     return NULL;
 }
+
+// reads the available tickets file (stock.at) and returns a instance of the ticket class
 Tickets* FileIO::readTickets(std::string event_title, std::string seller_username){
     std::string line;
     std::ifstream file;

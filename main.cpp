@@ -237,6 +237,9 @@ int main() {
     return 0;
 }
 
+
+// takes a transaction and places it into the transaction array (increasing its size)
+// each element in the array will be written to the daily transaction file
 void log_transaction(std::string transaction) {
     (*trans_size)++;  // Increment the size
     std::string* temp_log =
@@ -252,6 +255,7 @@ void log_transaction(std::string transaction) {
         transaction;  // Append the transaction to the end
 }
 
+// takes a username, checks if it is valid, then calls a function in the FileIO class to search for the user
 User* login(std::string username) {
     // Check the username for valid characters
     // TODO
@@ -267,7 +271,7 @@ User* login(std::string username) {
     return file_stream.readAccounts(username);
 }
 
+// calls the function in the FileIO class to read (and return) the ticket
 Tickets* buy(std::string event_title, std::string seller_username){
-
   return file_stream.readTickets(event_title, seller_username);
 }
