@@ -23,7 +23,7 @@ FileIO::FileIO(std::string account_file, std::string tickets_file, std::string t
     avail_tickets_file = tickets_file;
 }
 
-// reads the current accounts file (users.ua) and returns a instance of the user class
+// reads the current accounts file (users.ua) and returns an instance of the user class
 User* FileIO::readAccounts(std::string username) {
     std::string line;
     std::ifstream file;
@@ -67,14 +67,14 @@ User* FileIO::readAccounts(std::string username) {
     return NULL;
 }
 
-// reads the available tickets file (stock.at) and returns a instance of the ticket class
+// reads the available tickets file (stock.at) and returns an instance of the ticket class
 Tickets* FileIO::readTickets(std::string event_title, std::string seller_username){
     std::string line;
     std::ifstream file;
     file.open(avail_tickets_file);
 
     if(event_title.length() < 25 ){
-        event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 15 characters
+        event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 25 characters
     }
     if(seller_username.length() < 14 ){
         seller_username += (std::string(14 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
@@ -89,7 +89,6 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
 
             std::string file_event (line.begin(), line.begin()+25);
             std::string file_seller (line.begin()+26, line.begin()+40);
-            //
             // std::cout << file_event << std::endl;
             // std::cout << file_seller << std::endl;
             if((seller_username == file_seller) && (event_title == file_event)){
@@ -103,8 +102,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
 
         file.close();
         if (found == true) {
-          //creating new stuct to hold the tickets information
-          //and pass the stuct back to main.cpp
+          // creating new struct to hold the tickets information
+          // and pass the struct back to main.cpp
           Tickets *t =  new Tickets;
           t->event_title = buff[0];
           t->seller_username = buff[1];
