@@ -1,10 +1,16 @@
 /*
-@param daily_trans_file name of daily transaction file
-@param curr_account_file name of current user accounts file
-@param avail_tickets_file name of available tickets file
-
-@method readAccounts reads the current accounts file (users.ua)
-@method readTickets reads the available tickets file (stock.at)
+* The FileIO class implements functions to read/write various files 
+*
+* @param daily_trans_file name of daily transaction file
+* @param curr_account_file name of current user accounts file
+* @param avail_tickets_file name of available tickets file
+*
+* @method readAccounts reads the current accounts file (users.ua)
+* @method readTickets reads the available tickets file (stock.at)
+*
+* @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+* @version 0.1
+* @since 2019-02-12
 */
 
 #include <fstream>
@@ -23,7 +29,11 @@ FileIO::FileIO(std::string account_file, std::string tickets_file, std::string t
     avail_tickets_file = tickets_file;
 }
 
-// reads the current accounts file (users.ua) and returns a instance of the user class
+/*
+* Reads the current accounts file (users.ua) and returns a instance of the user class
+* @param username The username entered 
+* @return User This returns a instance of the User class
+*/
 User* FileIO::readAccounts(std::string username) {
     std::string line;
     std::ifstream file;
@@ -67,7 +77,12 @@ User* FileIO::readAccounts(std::string username) {
     return NULL;
 }
 
-// reads the available tickets file (stock.at) and returns a instance of the ticket class
+/*
+* Reads the available tickets file (stock.at) and returns a instance of the ticket class
+* @param event_title The title of the event that the user wants to purchase tickets for
+* @param seller_username The username of the user wanting to buy the ticket
+* @return Tickets This returns a instance of the Tickets class
+*/
 Tickets* FileIO::readTickets(std::string event_title, std::string seller_username){
     std::string line;
     std::ifstream file;

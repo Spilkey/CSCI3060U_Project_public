@@ -1,25 +1,27 @@
 /*
-@author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
-
-Program intention/purpose: Ticket buying/selling service for logged-in users.
-
-How to compile: In the CSCI3060U_Project directory run the makefile by
-using the "make" command in a terminal.
-
-To run the actual program in your terminal use the command:
-./ticket-seller
-
-Users can complete eight different transactions and use also the exit command:
-login, logout, create, delete, sell, buy, refund, addcredit,
-and type "exit" to end the program.
-Simply type these tranaction codes in the program to initiate each transaction's sequence.
-Once in the transaction sequence, just follow the instructions the program outputs to you.
-
-Input files:
-  tests/users.ua (the current users file)
-  tests/stock.at (the available tickets file)
-Output files:
-  trans.out (the daily transaction file)
+* Program intention/purpose: Ticket buying/selling service for logged-in users.
+*
+* How to compile: In the CSCI3060U_Project directory run the makefile by
+* using the "make" command in a terminal.
+*
+* To run the actual program in your terminal use the command:
+* ./ticket-seller
+*
+* Users can complete eight different transactions and use also the exit command:
+* login, logout, create, delete, sell, buy, refund, addcredit,
+* and type "exit" to end the program.
+* Simply type these tranaction codes in the program to initiate each transaction's sequence.
+* Once in the transaction sequence, just follow the instructions the program outputs to you.
+*
+* Input files:
+* tests/users.ua (the current users file)
+* tests/stock.at (the available tickets file)
+* Output files:
+* trans.out (the daily transaction file)
+*
+* @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+* @version 0.1
+* @since 2019-02-12
 */
 
 #include <cstring>
@@ -49,9 +51,16 @@ const std::string avail_tickets_file =
     "tests/stock.at";  // The location of the stock file
 FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // The backend class
 
+
+
+/*
+* This is the main method which handles the user input and calls the functions
+* @param args Unused (to be replaced with files)
+* @return Nothing
+*/
 // The filenames will be passed as command line arguments in the phase #3
 //int main(int argc, char** argv) {
-int main() {
+void main() {
     // Init variables
     User* curr_user = NULL;
 
@@ -234,12 +243,14 @@ int main() {
         }
     }
     delete curr_user;
-    return 0;
 }
 
-
-// takes a transaction and places it into the transaction array (increasing its size)
-// each element in the array will be written to the daily transaction file
+/*
+* Takes a transaction and places it into the transaction array (increasing its size)
+* each element in the array will be written to the daily transaction file
+* @param transaction The transaction to log into the transaction file
+* @return Nothing
+*/
 void log_transaction(std::string transaction) {
     (*trans_size)++;  // Increment the size
     std::string* temp_log =
@@ -255,7 +266,11 @@ void log_transaction(std::string transaction) {
         transaction;  // Append the transaction to the end
 }
 
-// takes a username, checks if it is valid, then calls a function in the FileIO class to search for the user
+/*
+* Takes a username, checks if it is valid, then calls a function in the FileIO class to search for the user
+* @param username The username entered 
+* @return User This returns a instance of the User class
+*/
 User* login(std::string username) {
     // Check the username for valid characters
     // TODO
@@ -271,7 +286,12 @@ User* login(std::string username) {
     return file_stream.readAccounts(username);
 }
 
-// calls the function in the FileIO class to read (and return) the ticket
+/*
+* Calls the function in the FileIO class to read (and return) the ticket
+* @param event_title The title of the event that the user wants to purchase tickets for
+* @param seller_username The username of the user wanting to buy the ticket
+* @return Tickets This returns a instance of the Tickets class
+*/
 Tickets* buy(std::string event_title, std::string seller_username){
   return file_stream.readTickets(event_title, seller_username);
 }
