@@ -60,7 +60,7 @@ FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // 
 */
 // The filenames will be passed as command line arguments in the phase #3
 //int main(int argc, char** argv) {
-void main() {
+int main() {
     // Init variables
     User* curr_user = NULL;
 
@@ -243,6 +243,7 @@ void main() {
         }
     }
     delete curr_user;
+    return 0;
 }
 
 /*
