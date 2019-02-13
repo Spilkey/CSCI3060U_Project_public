@@ -134,6 +134,10 @@ int main() {
                 Tickets* current = new Tickets;
                 current = buy(event_t, seller_username);
 
+                if(seller_username.length() < 15 ){
+                    seller_username += (std::string(15 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
+                }
+
                 if(current == NULL){
                   error = "ERR: the information entered was not valid \n";
 
@@ -154,7 +158,7 @@ int main() {
                   std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
                   std::getline (std::cin,choice);
                   if(choice == "yes"){
-                    char rem_num_tickets [3] = {'0','0','0'};
+                    char rem_num_tickets[] = {'0','0','0'};
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
                     if(rem_tickets != 100){
@@ -163,19 +167,21 @@ int main() {
                     }else{
                       rem_num_tickets[0] = '1';
                     }
+                    std::cout << rem_num_tickets << std::endl;
+
                     //could probably put this into a function
-                    char log_price[] = {'0','0','0','.','0','0'};
-                    log_price[0] = (current->price / 100) + 48;
-                    log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;
-                    log_price[2] = ((current->price - ((log_price[0] - 48)*100)) -
-                                                      ((log_price[1] - 48)*10)) + 48;
+                    // char log_price[] = {'0','0','0','.','0','0'};
+                    // log_price[0] = (current->price / 100) + 48;
+                    // log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;
+                    // log_price[2] = ((current->price - ((log_price[0] - 48)*100)) -
+                    //                                   ((log_price[1] - 48)*10)) + 48;
 
-                    float rounded;
-                    int right_side_price_log = (int)((modf(current->price, &rounded))*100);
-                    log_price[4]= (right_side_price_log / 10) + 48;
-                    log_price[5] = (right_side_price_log- (log_price[4] - 48)*10) + 48;
+                    // float rounded;
+                    // int right_side_price_log = (int)((modf(current->price, &rounded))*100);
+                    // log_price[4]= (right_side_price_log / 10) + 48;
+                    // log_price[5] = (right_side_price_log- (log_price[4] - 48)*10) + 48;
 
-                    std::cout << "log price is " << log_price << std::endl;
+                  //  std::cout << "log price is " << log_price << std::endl;
                     std::cout << "remaining tickets is " << rem_num_tickets << std::endl;
                     //std::string log_price = std::to_string(current->price);
                     std::stringstream ss;

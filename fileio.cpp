@@ -65,8 +65,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
     if(event_title.length() < 25 ){
         event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 15 characters
     }
-    if(seller_username.length() < 14 ){
-        seller_username += (std::string(14 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
+    if(seller_username.length() < 15 ){
+        seller_username += (std::string(15 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
     }
     // std::cout << seller_username << std::endl;
     // std::cout << event_title << std::endl;
@@ -77,7 +77,7 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
         while (std::getline(file, line) && found == false) {
 
             std::string file_event (line.begin(), line.begin()+25);
-            std::string file_seller (line.begin()+26, line.begin()+40);
+            std::string file_seller (line.begin()+26, line.begin()+41);
             //
             // std::cout << file_event << std::endl;
             // std::cout << file_seller << std::endl;
@@ -87,8 +87,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
                 found = true;
                 buff[0] = file_event;
                 buff[1] = file_seller;
-                buff[2] = std::string (line.begin()+41, line.begin()+44);
-                buff[3] = std::string (line.begin()+45, line.begin()+51);
+                buff[2] = std::string (line.begin()+42, line.begin()+45);
+                buff[3] = std::string (line.begin()+46, line.begin()+52);
             }
         }
 
