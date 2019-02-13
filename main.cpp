@@ -1,4 +1,4 @@
-/*
+/**
 * Program intention/purpose: Ticket buying/selling service for logged-in users.
 *
 * How to compile: In the CSCI3060U_Project directory run the makefile by
@@ -21,7 +21,7 @@
 *
 * @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
 * @version 0.1
-* @since 2019-02-12
+* @since 2019-02-03
 */
 
 #include <cstring>
@@ -269,7 +269,7 @@ void log_transaction(std::string transaction) {
 
 /*
 * Takes a username, checks if it is valid, then calls a function in the FileIO class to search for the user
-* @param username The username entered 
+* @param username The username entered
 * @return User This returns a instance of the User class
 */
 User* login(std::string username) {

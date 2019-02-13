@@ -1,4 +1,4 @@
-/*
+/**
 * The User class implements functions to handle various user-related functions
 * such as buy, sell, addCredit, etc.
 *
@@ -9,7 +9,7 @@
 *
 * @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
 * @version 0.1
-* @since 2019-02-12
+* @since 2019-02-03
 */
 
 #include <iostream>

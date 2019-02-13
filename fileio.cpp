@@ -1,5 +1,5 @@
-/*
-* The FileIO class implements functions to read/write various files 
+/**
+* The FileIO class implements functions to read/write various files
 *
 * @param daily_trans_file name of daily transaction file
 * @param curr_account_file name of current user accounts file
@@ -10,7 +10,7 @@
 *
 * @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
 * @version 0.1
-* @since 2019-02-12
+* @since 2019-02-03
 */
 
 #include <fstream>
@@ -31,7 +31,7 @@ FileIO::FileIO(std::string account_file, std::string tickets_file, std::string t
 
 /*
 * Reads the current accounts file (users.ua) and returns a instance of the user class
-* @param username The username entered 
+* @param username The username entered
 * @return User This returns a instance of the User class
 */
 User* FileIO::readAccounts(std::string username) {

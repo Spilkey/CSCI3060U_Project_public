@@ -1,4 +1,4 @@
-/*
+/**
 * The admin class implements the functions that require elevated permissions
 *
 * Class not included in phase 2 prototype.
@@ -10,7 +10,7 @@
 *
 * @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
 * @version 0.1
-* @since 2019-02-12
+* @since 2019-02-03
 */
 
 #include <iostream>
