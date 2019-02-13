@@ -88,7 +88,7 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
     std::ifstream file;
     file.open(avail_tickets_file);
 
-    //normailing event title and user name to correct lengths
+    // normalizing event title and user name to correct lengths
     if(event_title.length() < 25 ){
         event_title += (std::string(25 - event_title.length(), ' '));
     }
@@ -101,12 +101,12 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
 
         while (std::getline(file, line) && found == false) {
 
-            //will create a substring from int to int using .begin() as a starting point
+            // will create a substring from int to int using .begin() as a starting point
             std::string file_event (line.begin(), line.begin()+25);
             std::string file_seller (line.begin()+26, line.begin()+41);
 
 
-            //if the seller username and event title is found
+            // if the seller username and event title is found
             if((seller_username == file_seller) && (event_title == file_event)){
                 found = true;
                 ticket_info[0] = file_event;
