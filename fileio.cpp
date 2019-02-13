@@ -1,3 +1,18 @@
+/**
+* The FileIO class implements functions to read/write various files
+*
+* @param daily_trans_file name of daily transaction file
+* @param curr_account_file name of current user accounts file
+* @param avail_tickets_file name of available tickets file
+*
+* @method readAccounts reads the current accounts file (users.ua)
+* @method readTickets reads the available tickets file (stock.at)
+*
+* @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+* @version 0.1
+* @since 2019-02-03
+*/
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -7,7 +22,6 @@
 #include "tickets.h"
 #include "fileio.h"
 
-
 FileIO::FileIO(std::string account_file, std::string tickets_file, std::string transaction_file) {
     // TODO - load the transaction file
     daily_trans_file = transaction_file;
@@ -15,6 +29,11 @@ FileIO::FileIO(std::string account_file, std::string tickets_file, std::string t
     avail_tickets_file = tickets_file;
 }
 
+/*
+* Reads the current accounts file (users.ua) and returns a instance of the user class
+* @param username The username entered
+* @return User This returns a instance of the User class
+*/
 User* FileIO::readAccounts(std::string username) {
     std::string line;
     std::ifstream file;
@@ -57,13 +76,20 @@ User* FileIO::readAccounts(std::string username) {
     }
     return NULL;
 }
+
+/*
+* Reads the available tickets file (stock.at) and returns a instance of the ticket class
+* @param event_title The title of the event that the user wants to purchase tickets for
+* @param seller_username The username of the user wanting to buy the ticket
+* @return Tickets This returns a instance of the Tickets class
+*/
 Tickets* FileIO::readTickets(std::string event_title, std::string seller_username){
     std::string line;
     std::ifstream file;
     file.open(avail_tickets_file);
 
     if(event_title.length() < 25 ){
-        event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 15 characters
+        event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 25 characters
     }
     if(seller_username.length() < 15 ){
         seller_username += (std::string(15 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
@@ -77,8 +103,12 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
         while (std::getline(file, line) && found == false) {
 
             std::string file_event (line.begin(), line.begin()+25);
+<<<<<<< HEAD
             std::string file_seller (line.begin()+26, line.begin()+41);
             //
+=======
+            std::string file_seller (line.begin()+26, line.begin()+40);
+>>>>>>> 3e154d95a6a3a7896f515ae585501a18dcf77b56
             // std::cout << file_event << std::endl;
             // std::cout << file_seller << std::endl;
 
@@ -94,8 +124,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
 
         file.close();
         if (found == true) {
-          //creating new stuct to hold the tickets information
-          //and pass the stuct back to main.cpp
+          // creating new struct to hold the tickets information
+          // and pass the struct back to main.cpp
           Tickets *t =  new Tickets;
           t->event_title = buff[0];
           t->seller_username = buff[1];

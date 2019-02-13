@@ -1,6 +1,20 @@
 #ifndef fileio_H
 #define fileio_H
 
+/**
+* The FileIO class implements functions to read/write various files
+*
+* @param daily_trans_file name of daily transaction file
+* @param curr_account_file name of current user accounts file
+* @param avail_tickets_file name of available tickets file
+*
+* @method readAccounts reads the current accounts file (users.ua)
+* @method readTickets reads the available tickets file (stock.at)
+*
+* @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+* @version 0.1
+* @since 2019-02-03
+*/
 class FileIO {
     std::string daily_trans_file;
     std::string curr_account_file;
