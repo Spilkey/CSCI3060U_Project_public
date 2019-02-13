@@ -88,37 +88,31 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
     std::ifstream file;
     file.open(avail_tickets_file);
 
+    //normailing event title and user name to correct lengths
     if(event_title.length() < 25 ){
-        event_title += (std::string(25 - event_title.length(), ' ')); // in theory this should normalize the string to 25 characters
+        event_title += (std::string(25 - event_title.length(), ' '));
     }
     if(seller_username.length() < 15 ){
-        seller_username += (std::string(15 - seller_username.length(), ' ')); // in theory this should normalize the string to 15 characters
+        seller_username += (std::string(15 - seller_username.length(), ' '));
     }
-    // std::cout << seller_username << std::endl;
-    // std::cout << event_title << std::endl;
     if (file.is_open()) {
         bool found = false;
-        std::string buff[4];
+        std::string ticket_info[4];
 
         while (std::getline(file, line) && found == false) {
 
+            //will create a substring from int to int using .begin() as a starting point
             std::string file_event (line.begin(), line.begin()+25);
-<<<<<<< HEAD
             std::string file_seller (line.begin()+26, line.begin()+41);
-            //
-=======
-            std::string file_seller (line.begin()+26, line.begin()+40);
->>>>>>> 3e154d95a6a3a7896f515ae585501a18dcf77b56
-            // std::cout << file_event << std::endl;
-            // std::cout << file_seller << std::endl;
+
 
             //if the seller username and event title is found
             if((seller_username == file_seller) && (event_title == file_event)){
                 found = true;
-                buff[0] = file_event;
-                buff[1] = file_seller;
-                buff[2] = std::string (line.begin()+42, line.begin()+45);
-                buff[3] = std::string (line.begin()+46, line.begin()+52);
+                ticket_info[0] = file_event;
+                ticket_info[1] = file_seller;
+                ticket_info[2] = std::string (line.begin()+42, line.begin()+45);
+                ticket_info[3] = std::string (line.begin()+46, line.begin()+52);
             }
         }
 
@@ -127,10 +121,10 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
           // creating new struct to hold the tickets information
           // and pass the struct back to main.cpp
           Tickets *t =  new Tickets;
-          t->event_title = buff[0];
-          t->seller_username = buff[1];
-          t->total_tickets = std::stoi(buff[2]);
-          t->price = std::stoi(buff[3]);
+          t->event_title = ticket_info[0];
+          t->seller_username = ticket_info[1];
+          t->total_tickets = std::stoi(ticket_info[2]);
+          t->price = std::stoi(ticket_info[3]);
           return t;
         }
     }
