@@ -124,6 +124,8 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
           t->event_title = ticket_info[0];
           t->seller_username = ticket_info[1];
           t->total_tickets = std::stoi(ticket_info[2]);
+          //this is an integer
+          //TODO: make this read a float
           t->price = std::stoi(ticket_info[3]);
           return t;
         }

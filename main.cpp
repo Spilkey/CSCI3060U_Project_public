@@ -38,6 +38,7 @@
 void log_transaction(std::string transaction, FileIO file_stream);
 User* login(std::string username);
 Tickets* buy(std::string event_title, std::string seller_username);
+std::string int_to_log(int num, int length);
 
 int* trans_size = new int(0);  // The array to contain the transactions
 std::string* trans_log =
@@ -213,37 +214,32 @@ int main() {
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
                     //converts remaining numbner of tickets to string and adds padding
-                    std::string new_ticket_counter = std::to_string(rem_tickets);
-                    new_ticket_counter.insert(new_ticket_counter.begin(), 3 - new_ticket_counter.length(), '0');
+                    std::string new_ticket_counter = int_to_log(rem_tickets, 3);
 
-                    //TODO: Convert padding method to string same as remaining tickets
-                    //converts price per ticket to char arrays and pres for wrting to log string
                     //left side
-                    char log_price[6] = {'0','0','0','.','0','0'};
-                    log_price[0] = (current->price / 100) + 48;
-                    log_price[1] = ((current->price - ((log_price[0] - 48)*100)) / 10) + 48;
-                    log_price[2] = ((current->price - ((log_price[0] - 48)*100)) -
-                                                      ((log_price[1] - 48)*10)) + 48;
+                    std::string left_side_price_log = int_to_log((int)(current->price), 3);
+
                     //right side
                     float rounded;
-                    int right_side_price_log = (int)((modf(current->price, &rounded))*100);
-                    log_price[4]= (right_side_price_log / 10) + 48;
-                    log_price[5] = (right_side_price_log- (log_price[4] - 48)*10) + 48;
+                    int right_side_price = (int)((modf(current->price, &rounded))*100);
+
+                    std::string right_side_price_log = int_to_log(right_side_price, 2);
+
 
                     //creates a string stream to create a string to be sent to the log_transaction() function
                     std::stringstream ss;
                     ss << "04 " << current->event_title << " "
                        << current->seller_username << " "
-                       << new_ticket_counter  << " " << log_price;
+                       << new_ticket_counter  << " " << left_side_price_log
+                       << "." << right_side_price_log << "\n";
                     std::string log = ss.str();
 
-                    //std::cout << log << std::endl; debug for checking log
+                    std::cout << log << std::endl; //debug for checking log
 
                     //using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
 
-                    //log_transaction(+current->price);
-
+                    //log_transaction(log);
 
                   }else{
                     error = "Transaction Canceled!!\n";
@@ -255,20 +251,86 @@ int main() {
 
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
+                system("clear");
                 std::string event_t;
                 std::string sale_price;
                 std::string num_of_tickets;
 
 
-                std::cout << "Please enter the event title of the tickets you wish to sell.
-                              Max length is 25 Characters."
-                          << std::endl;
-                std::getline(std::cin, event_title);
 
-                std::cout << "PLease "
+
+                std::cout << "Please enter the event title of the tickets you wish to sell."
+                              "Max length is 25 Characters."
+                          << std::endl;
+                std::getline(std::cin, event_t);
+
+                std::cout << "Please enter in the sale price." << std::endl;
+
+                std::getline(std::cin, sale_price);
+
+                std::cout << "Please enter in the number of tickets you wish to sell" << std::endl;
+
+                std::getline(std::cin, num_of_tickets);
+
+                //error checking
+                if(event_t.length() > 25){
+                  error = "ERR: Length of the event title is too long \n";
+
+                }else if(event_t.length() == 0){
+                  error = "ERR: You did not enter in any value for the event title \n";
+
+                }else if(atoi(sale_price.c_str()) > 999){
+                  error = "ERR: Price of the tickets is to expensive. Max price allowed is 999.99 \n";
+
+                }else if(sale_price.length() == 0){
+                  error = "ERR: You did not enter a sale price \n";
+
+                }else if(atoi(sale_price.c_str()) == 0){
+                  error = "ERR: You entered invalid input for the sale price\n";
+
+                }else if(atoi(num_of_tickets.c_str()) > 100) {
+                  error = "ERR: You cannot sell more than 100 tickets \n";
+
+                }else if(num_of_tickets.length() == 0){
+                  error = "ERR: You did not enter in any value for the number of tickets\n";
+
+                }else if(atoi(num_of_tickets.c_str()) == 0){
+                  error = "ERR: You entered invalid input for the number of tickets\n";
+
+                }else{
+
+                  //normalizing event title
+                  if(event_t.length() < 25 ){
+                      event_t += (std::string(25 - event_t.length(), ' '));
+
+                  }
+
+                  //converts remaining numbner of tickets to string and adds padding
+                  std::string num_of_tickets_to_log = int_to_log(atoi(num_of_tickets.c_str()), 3);
+
+                  //left side of price
+                  std::string left_side_price_log = int_to_log(atoi(sale_price.c_str()), 3);
+
+                  //right side of price
+                  float rounded;
+                  int right_side_price = (int)((modf(strtof(sale_price.c_str(),0), &rounded))*100);
+                  std::string right_side_price_log = int_to_log(right_side_price, 2);
+
+                  std::stringstream ss;
+                  ss << "03 " << event_t << " "
+                     << curr_user->getUserName() << " "
+                     << num_of_tickets_to_log << " " << left_side_price_log
+                     << "." << right_side_price_log <<"\n";
+                  std::string log = ss.str();
+
+                  std::cout << log << std::endl; //debug for checking log
+
+                  //log_transaction(log);
+                  error = "Successfully added ticket. Ticket will be processed and will be available next seesion\n";
+                }
 
             } else if (acc_type != "AA" && command == "addcredit") {
-                // Run addcredit for non admins
+                // Run addcredit for non admins/*
             } else if (command == "logout") {
                 // Write transactions
 
@@ -327,8 +389,20 @@ User* login(std::string username) {
 * Calls the function in the FileIO class to read (and return) the ticket
 * @param event_title The title of the event that the user wants to purchase tickets for
 * @param seller_username The username of the user wanting to buy the ticket
-* @return Tickets This returns a instance of the Tickets class
+* @return Tickets This returns a instance of the Tickets struct
 */
 Tickets* buy(std::string event_title, std::string seller_username){
   return file_stream.readTickets(event_title, seller_username);
+}
+
+/*
+* Function is called to add padding to integers so they can be added to the log strings
+* @param num The number which is going padding
+* @param length The length of the string to which the amount of padding is based off of
+* @return std:string The integer as a string with padding
+*/
+std::string int_to_log(int num, int length){
+  std::string new_num = std::to_string(num);
+  new_num.insert(new_num.begin(), length - new_num.length(), '0');
+  return new_num;
 }
