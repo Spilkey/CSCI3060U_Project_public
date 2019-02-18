@@ -255,6 +255,18 @@ int main() {
 
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
+                std::string event_t;
+                std::string sale_price;
+                std::string num_of_tickets;
+
+
+                std::cout << "Please enter the event title of the tickets you wish to sell.
+                              Max length is 25 Characters."
+                          << std::endl;
+                std::getline(std::cin, event_title);
+
+                std::cout << "PLease "
+
             } else if (acc_type != "AA" && command == "addcredit") {
                 // Run addcredit for non admins
             } else if (command == "logout") {
