@@ -20,7 +20,7 @@ class User {
    protected:
     std::string user_name;
     std::string acc_type;
-    int credit;
+    float credit;
     Admin* admin_commands;
 
    public:
@@ -28,7 +28,7 @@ class User {
     void addCredit(int tmp_credit);
 
     std::string getUserName();
-    int getCredit();
+    float getCredit();
     std::string getUserType();
 };
 

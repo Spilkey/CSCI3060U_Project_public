@@ -144,7 +144,7 @@ int main() {
                     // Run addcredit for admins
                 }
             }
-
+            //
             if (acc_type != "SS" && command == "buy") {
                 // Run buy
 
@@ -157,19 +157,19 @@ int main() {
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
                 std::getline (std::cin,event_t);
 
-                //prompts user to enter in seller username
+                // prompts user to enter in seller username
                 std::cout << "Please enter the user name who you will buying from: " << std::endl;
                 std::getline (std::cin,seller_username);
 
-                //prompts user to enter in amount of tickets
+                // prompts user to enter in amount of tickets
                 std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
                 std::getline (std::cin,command);
 
                 //converts entered number from user to an integer
                 num_of_tickets = atoi(command.c_str());
 
-                //setting ticket stuct equal to the information the user entered.
-                //Equals Null if information is invalid
+                // setting ticket stuct equal to the information the user entered.
+                // Equals Null if information is invalid
                 Tickets* current = new Tickets;
                 current = buy(event_t, seller_username);
 
@@ -177,11 +177,11 @@ int main() {
                 TODO
                 make a normalizer function for main.cpp and fileio.cpp to use
                 */
-                //normalizes the user name to 15 chars
+                // normalizes the user name to 15 chars
                 if(seller_username.length() < 15 ){
                     seller_username += (std::string(15 - seller_username.length(), ' '));
                                   }
-                //Handling for entry errors from user
+                // Handling for entry errors from user
                 if(current == NULL){
                   error = "ERR: the information entered was not valid \n";
 
@@ -202,31 +202,31 @@ int main() {
                   std::cout << "The cost per ticket is " << current->price
                   << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
 
-                  //takes in user choice
+                  // takes in user choice
                   std::string choice;
                   std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
                   std::getline (std::cin,choice);
                   if(choice == "yes"){
 
-                    //log
+                    // log
 
                     // calculates the remaining number of tickerts after purchase
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
-                    //converts remaining numbner of tickets to string and adds padding
+                    // converts remaining numbner of tickets to string and adds padding
                     std::string new_ticket_counter = int_to_log(rem_tickets, 3);
 
-                    //left side
+                    // left side
                     std::string left_side_price_log = int_to_log((int)(current->price), 3);
 
-                    //right side
+                    // right side
                     float rounded;
                     int right_side_price = (int)((modf(current->price, &rounded))*100);
 
                     std::string right_side_price_log = int_to_log(right_side_price, 2);
 
 
-                    //creates a string stream to create a string to be sent to the log_transaction() function
+                    // creates a string stream to create a string to be sent to the log_transaction() function
                     std::stringstream ss;
                     ss << "04 " << current->event_title << " "
                        << current->seller_username << " "
@@ -236,10 +236,10 @@ int main() {
 
                     std::cout << log << std::endl; //debug for checking log
 
-                    //using error srting to alert user of completion
+                    // using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
 
-                    //log_transaction(log);
+                    // log_transaction(log);
 
                   }else{
                     error = "Transaction Canceled!!\n";
@@ -272,46 +272,46 @@ int main() {
 
                 std::getline(std::cin, num_of_tickets);
 
-                //error checking
-                if(event_t.length() > 25){
+                // error checking
+                if (event_t.length() > 25){
                   error = "ERR: Length of the event title is too long \n";
 
-                }else if(event_t.length() == 0){
+                } else if (event_t.length() == 0){
                   error = "ERR: You did not enter in any value for the event title \n";
 
-                }else if(atoi(sale_price.c_str()) > 999){
+                } else if (atoi(sale_price.c_str()) > 999){
                   error = "ERR: Price of the tickets is to expensive. Max price allowed is 999.99 \n";
 
-                }else if(sale_price.length() == 0){
+                } else if (sale_price.length() == 0){
                   error = "ERR: You did not enter a sale price \n";
 
-                }else if(atoi(sale_price.c_str()) == 0){
+                } else if (atoi(sale_price.c_str()) == 0){
                   error = "ERR: You entered invalid input for the sale price\n";
 
-                }else if(atoi(num_of_tickets.c_str()) > 100) {
+                } else if (atoi(num_of_tickets.c_str()) > 100) {
                   error = "ERR: You cannot sell more than 100 tickets \n";
 
-                }else if(num_of_tickets.length() == 0){
+                } else if (num_of_tickets.length() == 0){
                   error = "ERR: You did not enter in any value for the number of tickets\n";
 
-                }else if(atoi(num_of_tickets.c_str()) == 0){
+                } else if (atoi(num_of_tickets.c_str()) == 0){
                   error = "ERR: You entered invalid input for the number of tickets\n";
 
-                }else{
+                } else {
 
-                  //normalizing event title
-                  if(event_t.length() < 25 ){
+                  // normalizing event title
+                  if (event_t.length() < 25 ){
                       event_t += (std::string(25 - event_t.length(), ' '));
 
                   }
 
-                  //converts remaining numbner of tickets to string and adds padding
+                  // converts remaining numbner of tickets to string and adds padding
                   std::string num_of_tickets_to_log = int_to_log(atoi(num_of_tickets.c_str()), 3);
 
-                  //left side of price
+                  // left side of price
                   std::string left_side_price_log = int_to_log(atoi(sale_price.c_str()), 3);
 
-                  //right side of price
+                  // right side of price
                   float rounded;
                   int right_side_price = (int)((modf(strtof(sale_price.c_str(),0), &rounded))*100);
                   std::string right_side_price_log = int_to_log(right_side_price, 2);
@@ -323,14 +323,53 @@ int main() {
                      << "." << right_side_price_log <<"\n";
                   std::string log = ss.str();
 
-                  std::cout << log << std::endl; //debug for checking log
+                  std::cout << log << std::endl; // debug for checking log
 
-                  //log_transaction(log);
+                  // log_transaction(log);
                   error = "Successfully added ticket. Ticket will be processed and will be available next seesion\n";
                 }
 
             } else if (acc_type != "AA" && command == "addcredit") {
-                // Run addcredit for non admins/*
+                std::string credit_amount;
+                std::cout << "Enter in the amount of credit you wish to add" << std::endl;
+
+                std::getline(std::cin, credit_amount);
+                // error checking
+                if (atoi(credit_amount.c_str()) > 1000){
+                  error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
+
+                } else if (atoi(credit_amount.c_str()) == 0){
+                  error = "ERR: Credit of $0 cannot be accepted\n";
+
+                } else if (credit_amount.length() == 0){
+                  error = "ERR: No value entered\n";
+
+                } else if ((strtof(credit_amount.c_str(),0)+curr_user->getCredit()) > 999999.99){
+                  error = "ERR: Can't exceed the max credit of 999999.99\n";
+
+                } else {
+
+                  // gets the left side of the credit and pads with 0's to be sent to the log file
+                  std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(curr_user->getCredit()), 6);
+
+
+                  // gets the 2 digits to the right of the decimal in converts them to a string
+                  float rounded;
+                  int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+curr_user->getCredit()), &rounded))*100);
+                  std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+
+                  std::stringstream ss;
+                  ss << "06 " << curr_user->getUserName() << " "
+                     << curr_user->getUserType() << " "
+                     << left_side_credit_log << "." << right_side_credit_log
+                     << "\n";
+                  std::string log = ss.str();
+
+                  std::cout << log << std::endl; // debug for checking log
+
+                  // log_transaction(log);
+                }
+
             } else if (command == "logout") {
                 // Write transactions
 

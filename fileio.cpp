@@ -71,7 +71,7 @@ User* FileIO::readAccounts(std::string username) {
 
         file.close();
         if (found == true) {
-            return new User(buff[0], atoi(buff[2].c_str()), buff[1]);
+            return new User(buff[0], strtof(buff[2].c_str(),0), buff[1]);
         }
     }
     return NULL;

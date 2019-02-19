@@ -40,7 +40,7 @@ std::string User::getUserName(){
     return user_name;
 }
 
-int User::getCredit() {
+float User::getCredit() {
     return credit;
 }
 
