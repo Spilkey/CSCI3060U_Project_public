@@ -5,7 +5,7 @@
 * using the "make" command in a terminal.
 *
 * To run the actual program in your terminal use the command:
-* ./ticket-seller
+* ./ticket-seller users.ua stock.at trans.out
 *
 * Users can complete eight different transactions and use also the exit command:
 * login, logout, create, delete, sell, buy, refund, addcredit,
@@ -44,26 +44,33 @@ int* trans_size = new int(0);  // The array to contain the transactions
 std::string* trans_log =
     new std::string[*trans_size];  // The size of the trans array
 
-const std::string curr_trans_file =
-    "trans.out";  // The location to save the transaction file
-const std::string curr_account_file =
-    "tests/users.ua";  // The location of the users file
-const std::string avail_tickets_file =
-    "tests/stock.at";  // The location of the stock file
+std::string curr_account_file =
+    "tests/";  // The location of the users file
+std::string avail_tickets_file =
+    "tests/";  // The location of the stock file
+std::string curr_trans_file =
+    "";  // The location to save the transaction file
 FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // The backend class
-
-
 
 /*
 * This is the main method which handles the user input and calls the functions
 * @param args Unused (to be replaced with files)
 * @return Nothing
 */
-// The filenames will be passed as command line arguments in the phase #3
-//int main(int argc, char** argv) {
-int main() {
+int main(int argc, char** argv) {
     // Init variables
     User* curr_user = NULL;
+
+    // Checking for correct command line arguments
+    if (argc == 4) {
+      curr_account_file += argv[1];
+      avail_tickets_file += argv[2];
+      curr_trans_file = argv[3];
+    } else {
+      std::cout << "Incorrect filename arguments, please run the program as follows:\n"
+                << "./ticket-seller users.ua stock.at trans.out" << std::endl;
+      return 0;
+    }
 
     bool exit = false;  // The flag to quit the program
     std::string error =
@@ -153,7 +160,7 @@ int main() {
                 int num_of_tickets;
                 system("clear");
 
-                //promtps user to enter in event title
+                // prompts user to enter in event title
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
                 std::getline (std::cin,event_t);
 
@@ -165,7 +172,7 @@ int main() {
                 std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
                 std::getline (std::cin,command);
 
-                //converts entered number from user to an integer
+                // converts entered number from user to an integer
                 num_of_tickets = atoi(command.c_str());
 
                 // setting ticket stuct equal to the information the user entered.
@@ -234,7 +241,7 @@ int main() {
                        << "." << right_side_price_log << "\n";
                     std::string log = ss.str();
 
-                    std::cout << log << std::endl; //debug for checking log
+                    std::cout << log << std::endl; // debug for checking log
 
                     // using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
@@ -245,9 +252,8 @@ int main() {
                     error = "Transaction Canceled!!\n";
                   }
                 }
-                //handling pointers
+                // handling pointers
                 delete current;
-                //command = "";
 
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
