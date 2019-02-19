@@ -51,7 +51,7 @@ User* FileIO::readAccounts(std::string username) {
             }
             line[15] = 0;
 
-            std::cout << line << std::endl;
+            //std::cout << line << std::endl;
 
             std::stringstream ss(line);
 

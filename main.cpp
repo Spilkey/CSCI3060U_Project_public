@@ -338,6 +338,7 @@ int main(int argc, char** argv) {
                 }
 
             } else if (acc_type != "AA" && command == "addcredit") {
+              system("clear");
                 std::string credit_amount;
                 std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
