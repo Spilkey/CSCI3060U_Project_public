@@ -5,7 +5,7 @@
 * using the "make" command in a terminal.
 *
 * To run the actual program in your terminal use the command:
-* ./ticket-seller
+* ./ticket-seller users.ua stock.at trans.out
 *
 * Users can complete eight different transactions and use also the exit command:
 * login, logout, create, delete, sell, buy, refund, addcredit,
@@ -44,26 +44,33 @@ int* trans_size = new int(0);  // The array to contain the transactions
 std::string* trans_log =
     new std::string[*trans_size];  // The size of the trans array
 
-const std::string curr_trans_file =
-    "trans.out";  // The location to save the transaction file
-const std::string curr_account_file =
-    "tests/users.ua";  // The location of the users file
-const std::string avail_tickets_file =
-    "tests/stock.at";  // The location of the stock file
+std::string curr_account_file =
+    "tests/";  // The location of the users file
+std::string avail_tickets_file =
+    "tests/";  // The location of the stock file
+std::string curr_trans_file =
+    "";  // The location to save the transaction file
 FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // The backend class
-
-
 
 /*
 * This is the main method which handles the user input and calls the functions
 * @param args Unused (to be replaced with files)
 * @return Nothing
 */
-// The filenames will be passed as command line arguments in the phase #3
-//int main(int argc, char** argv) {
-int main() {
+int main(int argc, char** argv) {
     // Init variables
     User* curr_user = NULL;
+
+    // Checking for correct command line arguments
+    if (argc == 4) {
+      curr_account_file += argv[1];
+      avail_tickets_file += argv[2];
+      curr_trans_file = argv[3];
+    } else {
+      std::cout << "Incorrect filename arguments, please run the program as follows:\n"
+                << "./ticket-seller users.ua stock.at trans.out" << std::endl;
+      return 0;
+    }
 
     bool exit = false;  // The flag to quit the program
     std::string error =
@@ -153,23 +160,23 @@ int main() {
                 int num_of_tickets;
                 system("clear");
 
-                //promtps user to enter in event title
+                // prompts user to enter in event title
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
                 std::getline (std::cin,event_t);
 
-                //prompts user to enter in seller username
+                // prompts user to enter in seller username
                 std::cout << "Please enter the user name who you will buying from: " << std::endl;
                 std::getline (std::cin,seller_username);
 
-                //prompts user to enter in amount of tickets
+                // prompts user to enter in amount of tickets
                 std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
                 std::getline (std::cin,command);
 
-                //converts entered number from user to an integer
+                // converts entered number from user to an integer
                 num_of_tickets = atoi(command.c_str());
 
-                //setting ticket stuct equal to the information the user entered.
-                //Equals Null if information is invalid
+                // setting ticket stuct equal to the information the user entered.
+                // Equals Null if information is invalid
                 Tickets* current = new Tickets;
                 current = buy(event_t, seller_username);
 
@@ -177,11 +184,11 @@ int main() {
                 TODO
                 make a normalizer function for main.cpp and fileio.cpp to use
                 */
-                //normalizes the user name to 15 chars
+                // normalizes the user name to 15 chars
                 if(seller_username.length() < 15 ){
                     seller_username += (std::string(15 - seller_username.length(), ' '));
                                   }
-                //Handling for entry errors from user
+                // Handling for entry errors from user
                 if(current == NULL){
                   error = "ERR: the information entered was not valid \n";
 
@@ -202,31 +209,30 @@ int main() {
                   std::cout << "The cost per ticket is " << current->price
                   << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
 
-                  //takes in user choice
+                  // takes in user choice
                   std::string choice;
                   std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
                   std::getline (std::cin,choice);
                   if(choice == "yes"){
 
-                    //log
-
+                    // log
                     // calculates the remaining number of tickerts after purchase
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
-                    //converts remaining numbner of tickets to string and adds padding
+                    // converts remaining numbner of tickets to string and adds padding
                     std::string new_ticket_counter = int_to_log(rem_tickets, 3);
 
-                    //left side
+                    // left side
                     std::string left_side_price_log = int_to_log((int)(current->price), 3);
 
-                    //right side
+                    // right side
                     float rounded;
                     int right_side_price = (int)((modf(current->price, &rounded))*100);
 
                     std::string right_side_price_log = int_to_log(right_side_price, 2);
 
 
-                    //creates a string stream to create a string to be sent to the log_transaction() function
+                    // creates a string stream to create a string to be sent to the log_transaction() function
                     std::stringstream ss;
                     ss << "04 " << current->event_title << " "
                        << current->seller_username << " "
@@ -234,20 +240,19 @@ int main() {
                        << "." << right_side_price_log << "\n";
                     std::string log = ss.str();
 
-                    std::cout << log << std::endl; //debug for checking log
+                    std::cout << log << std::endl; // debug for checking log
 
-                    //using error srting to alert user of completion
+                    // using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
 
-                    //log_transaction(log);
+                    // log_transaction(log);
 
                   }else{
                     error = "Transaction Canceled!!\n";
                   }
                 }
-                //handling pointers
+                // handling pointers
                 delete current;
-                //command = "";
 
             } else if (acc_type != "BS" && command == "sell") {
                 // Run sell
@@ -272,7 +277,7 @@ int main() {
 
                 std::getline(std::cin, num_of_tickets);
 
-                //error checking
+                // error checking
                 if(event_t.length() > 25){
                   error = "ERR: Length of the event title is too long \n";
 
@@ -299,19 +304,19 @@ int main() {
 
                 }else{
 
-                  //normalizing event title
+                  // normalizing event title
                   if(event_t.length() < 25 ){
                       event_t += (std::string(25 - event_t.length(), ' '));
 
                   }
 
-                  //converts remaining numbner of tickets to string and adds padding
+                  // converts remaining numbner of tickets to string and adds padding
                   std::string num_of_tickets_to_log = int_to_log(atoi(num_of_tickets.c_str()), 3);
 
-                  //left side of price
+                  // left side of price
                   std::string left_side_price_log = int_to_log(atoi(sale_price.c_str()), 3);
 
-                  //right side of price
+                  // right side of price
                   float rounded;
                   int right_side_price = (int)((modf(strtof(sale_price.c_str(),0), &rounded))*100);
                   std::string right_side_price_log = int_to_log(right_side_price, 2);
@@ -323,9 +328,9 @@ int main() {
                      << "." << right_side_price_log <<"\n";
                   std::string log = ss.str();
 
-                  std::cout << log << std::endl; //debug for checking log
+                  std::cout << log << std::endl; // debug for checking log
 
-                  //log_transaction(log);
+                  // log_transaction(log);
                   error = "Successfully added ticket. Ticket will be processed and will be available next seesion\n";
                 }
 
