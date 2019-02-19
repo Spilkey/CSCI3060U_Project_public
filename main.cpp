@@ -50,7 +50,7 @@ std::string avail_tickets_file =
     "tests/";  // The location of the stock file
 std::string curr_trans_file =
     "";  // The location to save the transaction file
-FileIO file_stream(curr_account_file, avail_tickets_file, curr_trans_file);  // The backend class
+FileIO* file_stream; // The backend class
 
 /*
 * This is the main method which handles the user input and calls the functions
@@ -71,6 +71,8 @@ int main(int argc, char** argv) {
                 << "./ticket-seller users.ua stock.at trans.out" << std::endl;
       return 0;
     }
+
+    file_stream = new FileIO(curr_account_file, avail_tickets_file, curr_trans_file);
 
     bool exit = false;  // The flag to quit the program
     std::string error =
@@ -427,7 +429,7 @@ User* login(std::string username) {
     }
 
     // Return the user
-    return file_stream.readAccounts(username);
+    return file_stream->readAccounts(username);
 }
 
 /*
@@ -437,7 +439,7 @@ User* login(std::string username) {
 * @return Tickets This returns a instance of the Tickets struct
 */
 Tickets* buy(std::string event_title, std::string seller_username){
-  return file_stream.readTickets(event_title, seller_username);
+  return file_stream->readTickets(event_title, seller_username);
 }
 
 /*
