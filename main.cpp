@@ -1,4 +1,4 @@
-/**
+/*
 * Program intention/purpose: Ticket buying/selling service for logged-in users.
 *
 * How to compile: In the CSCI3060U_Project directory run the makefile by
@@ -192,19 +192,19 @@ int main(int argc, char** argv) {
                                   }
                 // Handling for entry errors from user
                 if(current == NULL){
-                  error = "ERR: the information entered was not valid \n";
+                  error = "ERR: The information entered was not valid \n";
 
                 }else if(current->seller_username == curr_user->getUserName()){
-                  error = "ERR: you cannot buy from youself \n";
+                  error = "ERR: You cannot buy from youself \n";
 
                 }else if(num_of_tickets > 4 && acc_type != "AA"){
-                  error = "ERR: you cannot purchase more than 4 tickets \n";
+                  error = "ERR: You cannot purchase more than 4 tickets \n";
 
                 }else if(num_of_tickets <= 0){
                   error = "ERR: You cannot purchace 0 tickets \n";
 
                 }else if(current->total_tickets < num_of_tickets){
-                  error = "ERR: you cannot purchace more than the total amount of tickets \n";
+                  error = "ERR: You cannot purchace more than the total amount of tickets \n";
 
                 }else{
 
