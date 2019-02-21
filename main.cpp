@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
             std::cout << "- login : Logs you into the system." << std::endl;
             std::cout << "- exit : Quits the program." << std::endl;
         } else {
-            if (acc_type == "AA") {
+            if (!acc_type.compare("AA")) {
                 std::cout << "- create : Creates a new account." << std::endl;
                 std::cout << "- delete : Deletes an existing account."
                           << std::endl;

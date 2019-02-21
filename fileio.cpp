@@ -47,11 +47,8 @@ User* FileIO::readAccounts(std::string username) {
             buff[0] = "";
             for (int i = 0; i < 15; i++) {
                 buff[0] += line[i];
-                line[i] = 0;
             }
-            line[15] = 0;
-
-            //std::cout << line << std::endl;
+            line = line.substr(16, line.length() - 15);
 
             std::stringstream ss(line);
 
