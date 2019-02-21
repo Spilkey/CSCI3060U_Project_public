@@ -145,18 +145,43 @@ int main(int argc, char** argv) {
             if (acc_type == "AA") {
                 if (command == "create") {
                     // Run create
+                    std::string new_account_name;
+                    std::string new_account_type;
+                    int initial_credit;
+                    system("clear");
+
+                    // prompts user to enter in the new user name of the account
+                    std::cout << "Please enter the Username of the account you wish to create: \n";
+                    std::getline (std::cin, new_account_name);
+                    // prompts user to enter in the new account type
+                    std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
+                    std::getline (std::cin, new_account_type);
+                    // prompts user to enter in the new user name of the account
+                    std::cout << "Please enter the inital credit of the account you wish to create: \n";
+                    std::getline (std::cin, command);
+
+                    // converts entered number from user to an integer
+                    initial_credit = atoi(command.c_str());
+
+
+
                 } else if (command == "delete") {
                     // Run delete
+                    system("clear");
+
                 } else if (command == "refund") {
                     // Run refund
+                    system("clear");
+
                 } else if (command == "addcredit") {
                     // Run addcredit for admins
+                    system("clear");
+
                 }
             }
-            //
+
             if (acc_type != "SS" && command == "buy") {
                 // Run buy
-
                 std::string event_t;
                 std::string seller_username;
                 int num_of_tickets;
@@ -187,15 +212,15 @@ int main(int argc, char** argv) {
                 make a normalizer function for main.cpp and fileio.cpp to use
                 */
                 // normalizes the user name to 15 chars
-                if(seller_username.length() < 15 ){
+                if(seller_username.length() < 15){
                     seller_username += (std::string(15 - seller_username.length(), ' '));
-                                  }
+                }
                 // Handling for entry errors from user
                 if(current == NULL){
                   error = "ERR: The information entered was not valid \n";
 
                 }else if(current->seller_username == curr_user->getUserName()){
-                  error = "ERR: You cannot buy from youself \n";
+                  error = "ERR: You cannot buy from yourself \n";
 
                 }else if(num_of_tickets > 4 && acc_type != "AA"){
                   error = "ERR: You cannot purchase more than 4 tickets \n";
@@ -207,7 +232,6 @@ int main(int argc, char** argv) {
                   error = "ERR: You cannot purchace more than the total amount of tickets \n";
 
                 }else{
-
                   std::cout << "The cost per ticket is " << current->price
                   << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
 
@@ -218,7 +242,6 @@ int main(int argc, char** argv) {
                   if(choice == "yes"){
 
                     // log
-
                     // calculates the remaining number of tickerts after purchase
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
