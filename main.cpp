@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
         } else {
             if (acc_type == "AA") {
                 std::cout << "- create : Creates a new account." << std::endl;
-                std::cout << "- delete : Deletes an exisiting account."
+                std::cout << "- delete : Deletes an existing account."
                           << std::endl;
                 std::cout << "- refund : Reimburse a ticket sale." << std::endl;
                 std::cout << "- addcredit : Add credit to a user." << std::endl;
@@ -163,11 +163,61 @@ int main(int argc, char** argv) {
                     // converts entered number from user to an integer
                     initial_credit = atoi(command.c_str());
 
+                    // Handling for entry errors from user
+                    if (new_account_name == curr_user->getUserName()) {
+                      error = "ERR: You cannot create use your own username for a new account \n";
+                    } else if (initial_credit < 0) {
+                      error = "ERR: You cannot give a user negative credit \n";
+                    } else if (initial_credit > 999999) {
+                      error = "ERR: You cannot give a user more than 999 999 credit \n";
+                    } else if (new_account_name.length() > 15) {
+                      error = "ERR: You cannot give a user a name over 15 characters \n";
+                    } else if (new_account_name.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new username\n";
+                    } else if (new_account_type.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new user account type\n";
+                    // TODO: REGEX, check if the username contains all unicode characters
+                    // } else if () {
+                    //   error = "ERR: You entered an invalid character in your username \n";
+                    } else {
+                      std::stringstream ss;
+                      ss << "01 " << new_account_name << " "
+                         << new_account_type << " "
+                         << initial_credit << "\n";
+                      std::string log = ss.str();
 
+                      std::cout << log << std::endl; // debug for checking log
+                      // log_transaction(log);
+                    }
 
                 } else if (command == "delete") {
                     // Run delete
+                    std::string deleted_account_name;
                     system("clear");
+
+                    // prompts user to enter in the user name of the account to delete
+                    std::cout << "Please enter the Username of the account you wish to delete: \n";
+                    std::getline (std::cin, deleted_account_name);
+
+                    User* user_to_be_deleted = file_stream->readAccounts(deleted_account_name);
+
+                    // Handling for entry errors from user
+                    if (deleted_account_name == curr_user->getUserName()) {
+                      error = "ERR: You cannot delete yourself \n";
+                    } else if (deleted_account_name.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new username\n";
+                    } else if (user_to_be_deleted != NULL) {
+                      error = "ERR: User to be deleted does not exist in the database\n";
+                    } else {
+                      std::stringstream ss;
+                      ss << "02 " << deleted_account_name << " "
+                         << user_to_be_deleted->getUserType() << " "
+                         << user_to_be_deleted->getCredit() << "\n";
+                      std::string log = ss.str();
+
+                      std::cout << log << std::endl; // debug for checking log
+                      // log_transaction(log);
+                    }
 
                 } else if (command == "refund") {
                     // Run refund
@@ -268,13 +318,13 @@ int main(int argc, char** argv) {
 
                     std::cout << log << std::endl; // debug for checking log
 
-                    // using error srting to alert user of completion
+                    // using error string to alert user of completion
                     error = "Transaction Completed!!\n";
 
                     // log_transaction(log);
 
                   }else{
-                    error = "Transaction Canceled!!\n";
+                    error = "Transaction Cancelled!!\n";
                   }
                 }
                 // handling pointers

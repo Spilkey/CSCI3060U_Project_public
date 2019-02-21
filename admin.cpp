@@ -19,18 +19,18 @@
 
 Admin::Admin() {}
 
-void createAccount(std::string temp_name, std::string account) {
+std::string createAccount(std::string temp_name, std::string account) {
 
 }
 
-void deleteAccount(std::string temp_name) {
+std::string deleteAccount(std::string temp_name) {
 
 }
 
-void refund(std::string temp_name1, std::string temp_name2, int temp_credit) {
+std::string refund(std::string temp_name1, std::string temp_name2, int temp_credit) {
 
 }
 
-void addCredit(int temp_credit, std::string, temp_name) {
+std::string addCredit(int temp_credit, std::string temp_name) {
 
 }
