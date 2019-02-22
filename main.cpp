@@ -143,99 +143,95 @@ int main(int argc, char** argv) {
                 }
             }
         } else {
-            if (acc_type == "AA") {
-                if (command == "create") {
-                    // Run create
-                    std::string new_account_name;
-                    std::string new_account_type;
-                    int initial_credit;
-                    system("clear");
+            if (acc_type == "AA" && command == "create") {
+                // Run create
+                std::string new_account_name;
+                std::string new_account_type;
+                int initial_credit;
+                system("clear");
 
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the Username of the account you wish to create: \n";
-                    std::getline (std::cin, new_account_name);
-                    // prompts user to enter in the new account type
-                    std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
-                    std::getline (std::cin, new_account_type);
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the initial credit of the account you wish to create: \n";
-                    std::getline (std::cin, command);
+                // prompts user to enter in the new user name of the account
+                std::cout << "Please enter the Username of the account you wish to create: \n";
+                std::getline (std::cin, new_account_name);
+                // prompts user to enter in the new account type
+                std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
+                std::getline (std::cin, new_account_type);
+                // prompts user to enter in the new user name of the account
+                std::cout << "Please enter the initial credit of the account you wish to create: \n";
+                std::getline (std::cin, command);
 
-                    // converts entered number from user to an integer
-                    initial_credit = atoi(command.c_str());
+                // converts entered number from user to an integer
+                initial_credit = atoi(command.c_str());
 
-                    // regex to check for invalid characters in a new user name
-                    // goes from space to ~
-                    std::regex pattern("[ -~]+");
+                // regex to check for invalid characters in a new user name
+                // goes from space to ~
+                std::regex pattern("[ -~]+");
 
-                    // Handling for entry errors from user
-                    if (new_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot create use your own username for a new account \n";
-                    } else if (initial_credit < 0) {
-                      error = "ERR: You cannot give a user negative credit \n";
-                    } else if (initial_credit > 999999) {
-                      error = "ERR: You cannot give a user more than 999 999 credit \n";
-                    } else if (new_account_name.length() > 15) {
-                      error = "ERR: You cannot give a user a name over 15 characters \n";
-                    } else if (new_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (new_account_type.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new user account type\n";
-                    // if not a regex match, invalid character
-                    } else if (!regex_match(new_account_name, pattern)) {
-                      error = "ERR: You entered an invalid character in your username \n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "01 " << new_account_name << " "
-                         << new_account_type << " "
-                         << initial_credit << "\n";
-                      std::string log = ss.str();
+                // Handling for entry errors from user
+                if (new_account_name == curr_user->getUserName()) {
+                  error = "ERR: You cannot create use your own username for a new account \n";
+                } else if (initial_credit < 0) {
+                  error = "ERR: You cannot give a user negative credit \n";
+                } else if (initial_credit > 999999) {
+                  error = "ERR: You cannot give a user more than 999 999 credit \n";
+                } else if (new_account_name.length() > 15) {
+                  error = "ERR: You cannot give a user a name over 15 characters \n";
+                } else if (new_account_name.length() == 0) {
+                  error = "ERR: You did not enter in any value for the new username\n";
+                } else if (new_account_type.length() == 0) {
+                  error = "ERR: You did not enter in any value for the new user account type\n";
+                // if not a regex match, invalid character
+                } else if (!regex_match(new_account_name, pattern)) {
+                  error = "ERR: You entered an invalid character in your username \n";
+                } else {
+                  std::stringstream ss;
+                  ss << "01 " << new_account_name << " "
+                      << new_account_type << " "
+                      << initial_credit << "\n";
+                  std::string log = ss.str();
 
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-                    }
-
-                } else if (command == "delete") {
-                    // Run delete
-                    std::string deleted_account_name;
-                    system("clear");
-
-                    // prompts user to enter in the user name of the account to delete
-                    std::cout << "Please enter the Username of the account you wish to delete: \n";
-                    std::getline (std::cin, deleted_account_name);
-
-                    User* user_to_be_deleted = login(deleted_account_name);
-
-                    // Handling for entry errors from user
-                    if (deleted_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot delete yourself \n";
-                    } else if (deleted_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (user_to_be_deleted != NULL) {
-                      error = "ERR: User to be deleted does not exist in the database\n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "02 " << deleted_account_name << " "
-                         << user_to_be_deleted->getUserType() << " "
-                         << user_to_be_deleted->getCredit() << "\n";
-                      std::string log = ss.str();
-
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-                    }
-
-                } else if (command == "refund") {
-                    // Run refund
-                    system("clear");
-
-                } else if (command == "addcredit") {
-                    // Run addcredit for admins
-                    system("clear");
-
+                  std::cout << log << std::endl; // debug for checking log
+                  // log_transaction(log);
                 }
-            }
 
-            if (acc_type != "SS" && command == "buy") {
+            } else if (acc_type == "AA" && command == "delete") {
+                // Run delete
+                std::string deleted_account_name;
+                system("clear");
+
+                // prompts user to enter in the user name of the account to delete
+                std::cout << "Please enter the Username of the account you wish to delete: \n";
+                std::getline (std::cin, deleted_account_name);
+
+                User* user_to_be_deleted = login(deleted_account_name);
+
+                // Handling for entry errors from user
+                if (deleted_account_name == curr_user->getUserName()) {
+                  error = "ERR: You cannot delete yourself \n";
+                } else if (deleted_account_name.length() == 0) {
+                  error = "ERR: You did not enter in any value for the new username\n";
+                } else if (user_to_be_deleted != NULL) {
+                  error = "ERR: User to be deleted does not exist in the database\n";
+                } else {
+                  std::stringstream ss;
+                  ss << "02 " << deleted_account_name << " "
+                      << user_to_be_deleted->getUserType() << " "
+                      << user_to_be_deleted->getCredit() << "\n";
+                  std::string log = ss.str();
+
+                  std::cout << log << std::endl; // debug for checking log
+                  // log_transaction(log);
+                }
+
+            } else if (acc_type == "AA" && command == "refund") {
+                // Run refund
+                system("clear");
+
+            } else if (acc_type == "AA" && command == "addcredit") {
+                // Run addcredit for admins
+                system("clear");
+
+            } else if (acc_type != "SS" && command == "buy") {
                 // Run buy
                 std::string event_t;
                 std::string seller_username;
