@@ -145,8 +145,6 @@ int main(int argc, char** argv) {
             if (acc_type == "AA") {
                 if (command == "create") {
                     // Run create
-<<<<<<< HEAD
-=======
                     std::string new_account_name;
                     std::string new_account_type;
                     int initial_credit;
@@ -196,9 +194,37 @@ int main(int argc, char** argv) {
                       // log_transaction(log);
                     }
 
->>>>>>> 447b5c16d2f6bb91b78cf05bf5758118b4110a9e
                 } else if (command == "delete") {
                     // Run delete
+                    std::string deleted_account_name;
+                    system("clear");
+
+                    // prompts user to enter in the user name of the account to delete
+                    std::cout << "Please enter the Username of the account you wish to delete: \n";
+                    std::getline (std::cin, deleted_account_name);
+
+                    User* user_to_be_deleted = login(deleted_account_name);
+
+                    // Handling for entry errors from user
+                    if (deleted_account_name == curr_user->getUserName()) {
+                      error = "ERR: You cannot delete yourself \n";
+                    } else if (deleted_account_name.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new username\n";
+                    } else if (user_to_be_deleted != NULL) {
+                      error = "ERR: User to be deleted does not exist in the database\n";
+                    } else {
+                      std::stringstream ss;
+                      ss << "02 " << deleted_account_name << " "
+                         << user_to_be_deleted->getUserType() << " "
+                         << user_to_be_deleted->getCredit() << "\n";
+                      std::string log = ss.str();
+
+                      std::cout << log << std::endl; // debug for checking log
+                      // log_transaction(log);
+
+                      command = "";
+                    }
+
                 } else if (command == "refund") {
                     // Run refund
                 } else if (command == "addcredit") {
@@ -466,7 +492,6 @@ void log_transaction(std::string transaction) {
 */
 User* login(std::string username) {
     // Check the username for valid characters
-    // TODO
     if (username.size() > 15 || username.size() <= 0) {
         return NULL;
     } else if (username.size() <= 15) {
