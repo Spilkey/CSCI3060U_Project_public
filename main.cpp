@@ -30,6 +30,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <math.h>
+#include <regex>
 #include "admin.h"
 #include "user.h"
 #include "tickets.h"
@@ -97,7 +98,7 @@ int main(int argc, char** argv) {
             std::cout << "- login : Logs you into the system." << std::endl;
             std::cout << "- exit : Quits the program." << std::endl;
         } else {
-            if (acc_type == "AA") {
+            if (!acc_type.compare("AA")) {
                 std::cout << "- create : Creates a new account." << std::endl;
                 std::cout << "- delete : Deletes an exisiting account."
                           << std::endl;
@@ -144,6 +145,58 @@ int main(int argc, char** argv) {
             if (acc_type == "AA") {
                 if (command == "create") {
                     // Run create
+<<<<<<< HEAD
+=======
+                    std::string new_account_name;
+                    std::string new_account_type;
+                    int initial_credit;
+                    system("clear");
+
+                    // prompts user to enter in the new user name of the account
+                    std::cout << "Please enter the Username of the account you wish to create: \n";
+                    std::getline (std::cin, new_account_name);
+                    // prompts user to enter in the new account type
+                    std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
+                    std::getline (std::cin, new_account_type);
+                    // prompts user to enter in the new user name of the account
+                    std::cout << "Please enter the initial credit of the account you wish to create: \n";
+                    std::getline (std::cin, command);
+
+                    // converts entered number from user to an integer
+                    initial_credit = atoi(command.c_str());
+
+                    // regex to check for invalid characters in a new user name
+                    // goes from space to ~
+                    std::regex pattern("[ -~]+");
+
+                    // Handling for entry errors from user
+                    if (new_account_name == curr_user->getUserName()) {
+                      error = "ERR: You cannot create use your own username for a new account \n";
+                    } else if (initial_credit < 0) {
+                      error = "ERR: You cannot give a user negative credit \n";
+                    } else if (initial_credit > 999999) {
+                      error = "ERR: You cannot give a user more than 999 999 credit \n";
+                    } else if (new_account_name.length() > 15) {
+                      error = "ERR: You cannot give a user a name over 15 characters \n";
+                    } else if (new_account_name.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new username\n";
+                    } else if (new_account_type.length() == 0) {
+                      error = "ERR: You did not enter in any value for the new user account type\n";
+                    // if not a regex match, invalid character
+                    } else if (!regex_match(new_account_name, pattern)) {
+                      error = "ERR: You entered an invalid character in your username \n";
+                    } else {
+                      std::stringstream ss;
+                      ss << "01 " << new_account_name << " "
+                         << new_account_type << " "
+                         << initial_credit << "\n";
+                      std::string log = ss.str();
+
+                      std::cout << log << std::endl; // debug for checking log
+                      // log_transaction(log);
+                    }
+
+>>>>>>> 447b5c16d2f6bb91b78cf05bf5758118b4110a9e
                 } else if (command == "delete") {
                     // Run delete
                 } else if (command == "refund") {
@@ -263,9 +316,6 @@ int main(int argc, char** argv) {
                 std::string sale_price;
                 std::string num_of_tickets;
 
-
-
-
                 std::cout << "Please enter the event title of the tickets you wish to sell."
                               "Max length is 25 Characters."
                           << std::endl;
@@ -356,10 +406,8 @@ int main(int argc, char** argv) {
                   error = "ERR: Can't exceed the max credit of 999999.99\n";
 
                 } else {
-
                   // gets the left side of the credit and pads with 0's to be sent to the log file
                   std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(curr_user->getCredit()), 6);
-
 
                   // gets the 2 digits to the right of the decimal in converts them to a string
                   float rounded;
@@ -380,7 +428,6 @@ int main(int argc, char** argv) {
 
             } else if (command == "logout") {
                 // Write transactions
-
                 curr_user = NULL;
             } else {
                 error = "ERR: Command not found; Please try again.\n";
