@@ -92,7 +92,6 @@ int main(int argc, char** argv) {
         if (curr_user != NULL) {
             acc_type = curr_user->getUserType();
         }
-
         std::cout << "The available commands are:" << std::endl;
         if (curr_user == NULL) {
             std::cout << "- login : Logs you into the system." << std::endl;
@@ -100,7 +99,7 @@ int main(int argc, char** argv) {
         } else {
             if (acc_type == "AA") {
                 std::cout << "- create : Creates a new account." << std::endl;
-                std::cout << "- delete : Deletes an existing account."
+                std::cout << "- delete : Deletes an exisiting account."
                           << std::endl;
                 std::cout << "- refund : Reimburse a ticket sale." << std::endl;
                 std::cout << "- addcredit : Add credit to a user." << std::endl;
@@ -145,93 +144,18 @@ int main(int argc, char** argv) {
             if (acc_type == "AA") {
                 if (command == "create") {
                     // Run create
-                    std::string new_account_name;
-                    std::string new_account_type;
-                    int initial_credit;
-                    system("clear");
-
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the Username of the account you wish to create: \n";
-                    std::getline (std::cin, new_account_name);
-                    // prompts user to enter in the new account type
-                    std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
-                    std::getline (std::cin, new_account_type);
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the inital credit of the account you wish to create: \n";
-                    std::getline (std::cin, command);
-
-                    // converts entered number from user to an integer
-                    initial_credit = atoi(command.c_str());
-
-                    // Handling for entry errors from user
-                    if (new_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot create use your own username for a new account \n";
-                    } else if (initial_credit < 0) {
-                      error = "ERR: You cannot give a user negative credit \n";
-                    } else if (initial_credit > 999999) {
-                      error = "ERR: You cannot give a user more than 999 999 credit \n";
-                    } else if (new_account_name.length() > 15) {
-                      error = "ERR: You cannot give a user a name over 15 characters \n";
-                    } else if (new_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (new_account_type.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new user account type\n";
-                    // TODO: REGEX, check if the username contains all unicode characters
-                    // } else if () {
-                    //   error = "ERR: You entered an invalid character in your username \n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "01 " << new_account_name << " "
-                         << new_account_type << " "
-                         << initial_credit << "\n";
-                      std::string log = ss.str();
-
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-                    }
-
                 } else if (command == "delete") {
                     // Run delete
-                    std::string deleted_account_name;
-                    system("clear");
-
-                    // prompts user to enter in the user name of the account to delete
-                    std::cout << "Please enter the Username of the account you wish to delete: \n";
-                    std::getline (std::cin, deleted_account_name);
-
-                    User* user_to_be_deleted = file_stream->readAccounts(deleted_account_name);
-
-                    // Handling for entry errors from user
-                    if (deleted_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot delete yourself \n";
-                    } else if (deleted_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (user_to_be_deleted != NULL) {
-                      error = "ERR: User to be deleted does not exist in the database\n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "02 " << deleted_account_name << " "
-                         << user_to_be_deleted->getUserType() << " "
-                         << user_to_be_deleted->getCredit() << "\n";
-                      std::string log = ss.str();
-
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-                    }
-
                 } else if (command == "refund") {
                     // Run refund
-                    system("clear");
-
                 } else if (command == "addcredit") {
                     // Run addcredit for admins
-                    system("clear");
-
                 }
             }
-
+            //
             if (acc_type != "SS" && command == "buy") {
                 // Run buy
+
                 std::string event_t;
                 std::string seller_username;
                 int num_of_tickets;
@@ -262,15 +186,15 @@ int main(int argc, char** argv) {
                 make a normalizer function for main.cpp and fileio.cpp to use
                 */
                 // normalizes the user name to 15 chars
-                if(seller_username.length() < 15){
+                if(seller_username.length() < 15 ){
                     seller_username += (std::string(15 - seller_username.length(), ' '));
-                }
+                                  }
                 // Handling for entry errors from user
                 if(current == NULL){
                   error = "ERR: The information entered was not valid \n";
 
                 }else if(current->seller_username == curr_user->getUserName()){
-                  error = "ERR: You cannot buy from yourself \n";
+                  error = "ERR: You cannot buy from youself \n";
 
                 }else if(num_of_tickets > 4 && acc_type != "AA"){
                   error = "ERR: You cannot purchase more than 4 tickets \n";
@@ -282,6 +206,7 @@ int main(int argc, char** argv) {
                   error = "ERR: You cannot purchace more than the total amount of tickets \n";
 
                 }else{
+
                   std::cout << "The cost per ticket is " << current->price
                   << "\nThe total cost for this transaction is "<< num_of_tickets*current->price << std::endl;
 
@@ -292,6 +217,7 @@ int main(int argc, char** argv) {
                   if(choice == "yes"){
 
                     // log
+
                     // calculates the remaining number of tickerts after purchase
                     int rem_tickets = current->total_tickets - num_of_tickets;
 
@@ -318,13 +244,13 @@ int main(int argc, char** argv) {
 
                     std::cout << log << std::endl; // debug for checking log
 
-                    // using error string to alert user of completion
+                    // using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
 
                     // log_transaction(log);
 
                   }else{
-                    error = "Transaction Cancelled!!\n";
+                    error = "Transaction Canceled!!\n";
                   }
                 }
                 // handling pointers

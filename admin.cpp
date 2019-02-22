@@ -20,17 +20,17 @@
 Admin::Admin() {}
 
 std::string createAccount(std::string temp_name, std::string account) {
-
+  return NULL;
 }
 
 std::string deleteAccount(std::string temp_name) {
-
+  return NULL;
 }
 
 std::string refund(std::string temp_name1, std::string temp_name2, int temp_credit) {
-
+  return NULL;
 }
 
 std::string addCredit(int temp_credit, std::string temp_name) {
-
+  return NULL;
 }
