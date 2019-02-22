@@ -204,7 +204,7 @@ int main(int argc, char** argv) {
                     std::cout << "Please enter the Username of the account you wish to delete: \n";
                     std::getline (std::cin, deleted_account_name);
 
-                    User* user_to_be_deleted = file_stream->readAccounts(deleted_account_name);
+                    User* user_to_be_deleted = login(deleted_account_name);
 
                     // Handling for entry errors from user
                     if (deleted_account_name == curr_user->getUserName()) {
@@ -492,7 +492,6 @@ void log_transaction(std::string transaction) {
 */
 User* login(std::string username) {
     // Check the username for valid characters
-    // TODO
     if (username.size() > 15 || username.size() <= 0) {
         return NULL;
     } else if (username.size() <= 15) {
