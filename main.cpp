@@ -36,7 +36,7 @@
 #include "tickets.h"
 #include "fileio.h"
 
-void log_transaction(std::string transaction, FileIO file_stream);
+void log_transaction(std::string transaction);
 User* login(std::string username);
 Tickets* buy(std::string event_title, std::string seller_username);
 std::string int_to_log(int num, int length);
@@ -127,6 +127,9 @@ int main(int argc, char** argv) {
         if (curr_user == NULL) {
             if (command == "exit") {
                 exit = true;
+                
+                // Write the transactions to the external file
+                file_stream->writeTransactions(trans_log);
 
             } else if (command == "login") {
                 // Clear the screen
@@ -409,7 +412,7 @@ int main(int argc, char** argv) {
                 }
 
             } else if (acc_type != "AA" && command == "addcredit") {
-              system("clear");
+                system("clear");
                 std::string credit_amount;
                 std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
@@ -451,6 +454,8 @@ int main(int argc, char** argv) {
             } else if (command == "logout") {
                 // Write transactions
                 curr_user = NULL;
+                // Log the logout
+                log_transaction("00");
             } else {
                 error = "ERR: Command not found; Please try again.\n";
             }
