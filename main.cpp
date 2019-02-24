@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
         if (curr_user == NULL) {
             if (command == "exit") {
                 exit = true;
-                
+
                 // Write the transactions to the external file
                 file_stream->writeTransactions(trans_log);
 
@@ -145,99 +145,6 @@ int main(int argc, char** argv) {
                 }
             }
         } else {
-<<<<<<< HEAD
-            if (acc_type == "AA") {
-                if (command == "create") {
-                    // Run create
-                    std::string new_account_name;
-                    std::string new_account_type;
-                    int initial_credit;
-                    system("clear");
-
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the Username of the account you wish to create: \n";
-                    std::getline (std::cin, new_account_name);
-                    // prompts user to enter in the new account type
-                    std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
-                    std::getline (std::cin, new_account_type);
-                    // prompts user to enter in the new user name of the account
-                    std::cout << "Please enter the initial credit of the account you wish to create: \n";
-                    std::getline (std::cin, command);
-
-                    // converts entered number from user to an integer
-                    initial_credit = atoi(command.c_str());
-
-                    // regex to check for invalid characters in a new user name
-                    // goes from space to ~
-                    std::regex pattern("[ -~]+");
-
-                    // Handling for entry errors from user
-                    if (new_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot create use your own username for a new account \n";
-                    } else if (initial_credit < 0) {
-                      error = "ERR: You cannot give a user negative credit \n";
-                    } else if (initial_credit > 999999) {
-                      error = "ERR: You cannot give a user more than 999 999 credit \n";
-                    } else if (new_account_name.length() > 15) {
-                      error = "ERR: You cannot give a user a name over 15 characters \n";
-                    } else if (new_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (new_account_type.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new user account type\n";
-                    // if not a regex match, invalid character
-                    } else if (!regex_match(new_account_name, pattern)) {
-                      error = "ERR: You entered an invalid character in your username \n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "01 " << new_account_name << " "
-                         << new_account_type << " "
-                         << initial_credit << "\n";
-                      std::string log = ss.str();
-
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-                    }
-
-                } else if (command == "delete") {
-                    // Run delete
-                    std::string deleted_account_name;
-                    system("clear");
-
-                    // prompts user to enter in the user name of the account to delete
-                    std::cout << "Please enter the Username of the account you wish to delete: \n";
-                    std::getline (std::cin, deleted_account_name);
-
-                    User* user_to_be_deleted = login(deleted_account_name);
-
-                    // Handling for entry errors from user
-                    if (deleted_account_name == curr_user->getUserName()) {
-                      error = "ERR: You cannot delete yourself \n";
-                    } else if (deleted_account_name.length() == 0) {
-                      error = "ERR: You did not enter in any value for the new username\n";
-                    } else if (user_to_be_deleted != NULL) {
-                      error = "ERR: User to be deleted does not exist in the database\n";
-                    } else {
-                      std::stringstream ss;
-                      ss << "02 " << deleted_account_name << " "
-                         << user_to_be_deleted->getUserType() << " "
-                         << user_to_be_deleted->getCredit() << "\n";
-                      std::string log = ss.str();
-
-                      std::cout << log << std::endl; // debug for checking log
-                      // log_transaction(log);
-
-                      command = "";
-                    }
-
-                } else if (command == "refund") {
-                    // Run refund
-                } else if (command == "addcredit") {
-                    // Run addcredit for admins
-                }
-            }
-            //
-            if (acc_type != "SS" && command == "buy") {
-=======
             if (acc_type == "AA" && command == "create") {
                 // Run create
                 std::string new_account_name;
@@ -279,14 +186,25 @@ int main(int argc, char** argv) {
                 } else if (!regex_match(new_account_name, pattern)) {
                   error = "ERR: You entered an invalid character in your username \n";
                 } else {
+
+                  new_account_name += (std::string(15 - new_account_name.length(), ' '));
+
+                  // left side of credit
+                  std::string left_side_credit_log = int_to_log(initial_credit, 6);
+
+                  // right side of credit
+                  float rounded;
+                  int right_side_credit = (int)((modf(strtof(command.c_str(),0), &rounded))*100);
+                  std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+
                   std::stringstream ss;
                   ss << "01 " << new_account_name << " "
                       << new_account_type << " "
-                      << initial_credit << "\n";
+                      << left_side_credit_log << "." << right_side_credit_log << "\n";
                   std::string log = ss.str();
 
                   std::cout << log << std::endl; // debug for checking log
-                  // log_transaction(log);
+                  log_transaction(log);
                 }
 
             } else if (acc_type == "AA" && command == "delete") {
@@ -305,17 +223,26 @@ int main(int argc, char** argv) {
                   error = "ERR: You cannot delete yourself \n";
                 } else if (deleted_account_name.length() == 0) {
                   error = "ERR: You did not enter in any value for the new username\n";
-                } else if (user_to_be_deleted != NULL) {
+                } else if (user_to_be_deleted == NULL) {
                   error = "ERR: User to be deleted does not exist in the database\n";
                 } else {
+
+                  // left side of credit
+                  std::string left_side_credit_log = int_to_log((int)(user_to_be_deleted->getCredit()), 6);
+
+                  // right side of credit
+                  float rounded;
+                  int right_side_credit = (int)((modf(user_to_be_deleted->getCredit(), &rounded))*100);
+                  std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+
                   std::stringstream ss;
-                  ss << "02 " << deleted_account_name << " "
+                  ss << "02 " << user_to_be_deleted->getUserName() << " "
                       << user_to_be_deleted->getUserType() << " "
-                      << user_to_be_deleted->getCredit() << "\n";
+                      << left_side_credit_log << "." << right_side_credit_log << "\n";
                   std::string log = ss.str();
 
                   std::cout << log << std::endl; // debug for checking log
-                  // log_transaction(log);
+                  log_transaction(log);
                 }
 
             } else if (acc_type == "AA" && command == "refund") {
@@ -325,9 +252,56 @@ int main(int argc, char** argv) {
             } else if (acc_type == "AA" && command == "addcredit") {
                 // Run addcredit for admins
                 system("clear");
+                std::string user_name;
+                std::cout << "Enter in the username you wish to add credit to" << std::endl;
+
+                std::getline(std::cin, user_name);
+
+                std::string credit_amount;
+                std::cout << "Enter in the amount of credit you wish to add" << std::endl;
+
+                std::getline(std::cin, credit_amount);
+
+                User* addCredit_user = login(user_name);
+
+                // error checking
+                if(addCredit_user == NULL){
+                  error = "User was not found\n";
+
+                } else if (atoi(credit_amount.c_str()) > 1000){
+                  error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
+
+                } else if (atoi(credit_amount.c_str()) == 0){
+                  error = "ERR: Credit of $0 cannot be accepted\n";
+
+                } else if (credit_amount.length() == 0){
+                  error = "ERR: No value entered\n";
+
+                } else if ((strtof(credit_amount.c_str(),0)+curr_user->getCredit()) > 999999.99){
+                  error = "ERR: Can't exceed the max credit of 999999.99\n";
+
+                } else {
+                  // gets the left side of the credit and pads with 0's to be sent to the log file
+                  std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(addCredit_user->getCredit()), 6);
+
+                  // gets the 2 digits to the right of the decimal in converts them to a string
+                  float rounded;
+                  int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+addCredit_user->getCredit()), &rounded))*100);
+                  std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+
+                  std::stringstream ss;
+                  ss << "06 " << addCredit_user->getUserName() << " "
+                     << addCredit_user->getUserType() << " "
+                     << left_side_credit_log << "." << right_side_credit_log
+                     << "\n";
+                  std::string log = ss.str();
+
+                  std::cout << log << std::endl; // debug for checking log
+
+                  log_transaction(log);
+                }
 
             } else if (acc_type != "SS" && command == "buy") {
->>>>>>> 37da70a8c37f99364222a88041fc0a98260f48da
                 // Run buy
 
                 std::string event_t;
@@ -421,7 +395,7 @@ int main(int argc, char** argv) {
                     // using error srting to alert user of completion
                     error = "Transaction Completed!!\n";
 
-                    // log_transaction(log);
+                    log_transaction(log);
 
                   }else{
                     error = "Transaction Canceled!!\n";
@@ -498,12 +472,12 @@ int main(int argc, char** argv) {
                   ss << "03 " << event_t << " "
                      << curr_user->getUserName() << " "
                      << num_of_tickets_to_log << " " << left_side_price_log
-                     << "." << right_side_price_log <<"\n";
+                     << "." << right_side_price_log << "\n";
                   std::string log = ss.str();
 
                   std::cout << log << std::endl; // debug for checking log
 
-                  // log_transaction(log);
+                  log_transaction(log);
                   error = "Successfully added ticket. Ticket will be processed and will be available next seesion\n";
                 }
 
@@ -544,14 +518,14 @@ int main(int argc, char** argv) {
 
                   std::cout << log << std::endl; // debug for checking log
 
-                  // log_transaction(log);
+                  log_transaction(log);
                 }
 
             } else if (command == "logout") {
                 // Write transactions
                 curr_user = NULL;
                 // Log the logout
-                log_transaction("00");
+                log_transaction("00\n");
             } else {
                 error = "ERR: Command not found; Please try again.\n";
             }

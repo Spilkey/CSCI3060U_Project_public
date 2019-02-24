@@ -68,7 +68,13 @@ User* FileIO::readAccounts(std::string username) {
 
         file.close();
         if (found == true) {
-            return new User(buff[0], strtof(buff[2].c_str(),0), buff[1]);
+
+          // this is to combat a small rounding error with strtof
+            float to_user_credit = strtof(buff[2].c_str(),0);
+            if(to_user_credit >= 1000000){
+              to_user_credit = 999999.00;
+            }
+            return new User(buff[0], to_user_credit, buff[1]);
         }
     }
     return NULL;
