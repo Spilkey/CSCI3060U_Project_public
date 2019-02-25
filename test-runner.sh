@@ -2,7 +2,7 @@
 #script to loop through directories to merge files
 
 
-tests="haha/*"
+tests="tests/*"
 
 for t in $tests
 do
