@@ -24,7 +24,7 @@ class FileIO {
     FileIO(std::string account_file, std::string tickets_file, std::string transaction_file);
     User* readAccounts(std::string username);
     Tickets* readTickets(std::string event_title, std::string seller_username);
-    void writeTransactions(std::string transactions[]);
+    void writeTransactions(std::vector<std::string> transactions);
 
 };
 

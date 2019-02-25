@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <string>
 #include "admin.h"
 #include "user.h"
@@ -136,13 +137,13 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
     return NULL;
 }
 
-void FileIO::writeTransactions(std::string transactions[]){
+void FileIO::writeTransactions(std::vector<std::string> transactions){
     std::ofstream file; // The file to write to
     file.open(this->daily_trans_file, std::ios_base::app); // Open the file
 
     // Print the elements in the array to the file
-    for(int i = 0; i < transactions->length(); i++){
-        file << transactions[i];
+    for(int i = 0; i < transactions.size(); i++){
+        file << transactions[i] << std::endl;
     }
 
     // Close the file

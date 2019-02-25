@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <regex>
+#include <vector>
 #include "admin.h"
 #include "user.h"
 #include "tickets.h"
@@ -41,9 +42,7 @@ User* login(std::string username);
 Tickets* buy(std::string event_title, std::string seller_username);
 std::string int_to_log(int num, int length);
 
-int* trans_size = new int(0);  // The array to contain the transactions
-std::string* trans_log =
-    new std::string[*trans_size];  // The size of the trans array
+std::vector<std::string> trans_log;
 
 std::string curr_account_file =
     "tests/";  // The location of the users file
@@ -100,7 +99,7 @@ int main(int argc, char** argv) {
         } else {
             if (!acc_type.compare("AA")) {
                 std::cout << "- create : Creates a new account." << std::endl;
-                std::cout << "- delete : Deletes an exisiting account."
+                std::cout << "- delete : Deletes an existing account."
                           << std::endl;
                 std::cout << "- refund : Reimburse a ticket sale." << std::endl;
                 std::cout << "- addcredit : Add credit to a user." << std::endl;
@@ -126,9 +125,6 @@ int main(int argc, char** argv) {
         if (curr_user == NULL) {
             if (command == "exit") {
                 exit = true;
-
-                // Write the transactions to the external file
-                file_stream->writeTransactions(trans_log);
 
             } else if (command == "login") {
                 // Clear the screen
@@ -200,7 +196,7 @@ int main(int argc, char** argv) {
                   std::stringstream ss;
                   ss << "01 " << new_account_name << " "
                       << new_account_type << " "
-                      << left_side_credit_log << "." << right_side_credit_log << "\n";
+                      << left_side_credit_log << "." << right_side_credit_log;
                   std::string log = ss.str();
 
                   std::cout << log << std::endl; // debug for checking log
@@ -284,7 +280,7 @@ int main(int argc, char** argv) {
                   // gets the left side of the credit and pads with 0's to be sent to the log file
                   std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(addCredit_user->getCredit()), 6);
 
-                  // gets the 2 digits to the right of the decimal in converts them to a string
+                  // gets the 2 digits to the right of the decimal and converts them to a string
                   float rounded;
                   int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+addCredit_user->getCredit()), &rounded))*100);
                   std::string right_side_credit_log = int_to_log(right_side_credit, 2);
@@ -318,7 +314,7 @@ int main(int argc, char** argv) {
                 std::getline (std::cin,seller_username);
 
                 // prompts user to enter in amount of tickets
-                std::cout << "Please enter in the amount of tickets you wish to buy" << std::endl;
+                std::cout << "Please enter in the amount of tickets you wish to buy: " << std::endl;
                 std::getline (std::cin,command);
 
                 // converts entered number from user to an integer
@@ -342,7 +338,7 @@ int main(int argc, char** argv) {
                   error = "ERR: The information entered was not valid \n";
 
                 }else if(current->seller_username == curr_user->getUserName()){
-                  error = "ERR: You cannot buy from youself \n";
+                  error = "ERR: You cannot buy from yourself \n";
 
                 }else if(num_of_tickets > 4 && acc_type != "AA"){
                   error = "ERR: You cannot purchase more than 4 tickets \n";
@@ -382,12 +378,12 @@ int main(int argc, char** argv) {
                     std::string right_side_price_log = int_to_log(right_side_price, 2);
 
 
-                    // creates a string stream to create a string to be sent to the log_transaction() function
+                    //creates a string stream to create a string to be sent to the log_transaction() function
                     std::stringstream ss;
                     ss << "04 " << current->event_title << " "
                        << current->seller_username << " "
                        << new_ticket_counter  << " " << left_side_price_log
-                       << "." << right_side_price_log << "\n";
+                       << "." << right_side_price_log;
                     std::string log = ss.str();
 
                     std::cout << log << std::endl; // debug for checking log
@@ -504,7 +500,7 @@ int main(int argc, char** argv) {
                   // gets the left side of the credit and pads with 0's to be sent to the log file
                   std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(curr_user->getCredit()), 6);
 
-                  // gets the 2 digits to the right of the decimal in converts them to a string
+                  // gets the 2 digits to the right of the decimal and converts them to a string
                   float rounded;
                   int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+curr_user->getCredit()), &rounded))*100);
                   std::string right_side_credit_log = int_to_log(right_side_credit, 2);
@@ -524,8 +520,15 @@ int main(int argc, char** argv) {
             } else if (command == "logout") {
                 // Write transactions
                 curr_user = NULL;
+
                 // Log the logout
-                log_transaction("00\n");
+                log_transaction("00");
+
+                // Write the transactions to the external file
+                file_stream->writeTransactions(trans_log);
+
+                // Clear the log
+                trans_log.clear();
             } else {
                 error = "ERR: Command not found; Please try again.\n";
             }
@@ -542,18 +545,7 @@ int main(int argc, char** argv) {
 * @return Nothing
 */
 void log_transaction(std::string transaction) {
-    (*trans_size)++;  // Increment the size
-    std::string* temp_log =
-        new std::string[*trans_size];  // Create a temp array with the new size
-
-    memcpy(temp_log, trans_log,
-           ((*trans_size) - 1) *
-               sizeof(std::string));  // Copy the strings over to the temp array
-
-    delete[] trans_log;    // Delete the old array
-    trans_log = temp_log;  // Use the new array
-    trans_log[(*trans_size) - 1] =
-        transaction;  // Append the transaction to the end
+  trans_log.push_back(transaction);
 }
 
 /*
