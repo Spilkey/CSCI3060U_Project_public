@@ -3,6 +3,7 @@
 
 
 tests="tests/*"
+touch test_log.txt
 
 for t in $tests
 do
@@ -10,19 +11,12 @@ do
     # If its a directory, go inside of it
     if [ -d "$t" ]
     then 
-    
-        ./ticket-seller users.ua stock.at trans.out < $t/test.inp
+        # Run the script and dump the output in the folder to be compared
+        ./ticket-seller users.ua stock.at $t/trans.out < $t/test.inp
         
-        # for tt in $t/*
-        # do
-        #         echo "Processing $tt"
-        #         # run_function
-        # done
-    
-    else
-        echo ""
+        echo "TEST $t:" >> test_log.txt
+        diff $t/trans.out test.out >> test_log.txt
+        echo $'\n' >> test_log.txt
     fi
-
+ 
 done
-
-#./ticket-seller users.ua stock.at trans.out < test.inp
