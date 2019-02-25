@@ -8,7 +8,8 @@ outputFolder = "tests/"
 with open('tests.csv', 'rb') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
-        
+        row[1] = row[1].replace('\r', '\n')
+
         #Make a folder with the name defined in the first row
         path = outputFolder + row[0] + "/"
         if not os.path.exists(path):

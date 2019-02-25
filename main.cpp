@@ -57,6 +57,7 @@ FileIO* file_stream; // The backend class
 * @param args Unused (to be replaced with files)
 * @return Nothing
 */
+
 int main(int argc, char** argv) {
     // Init variables
     User* curr_user = NULL;
@@ -119,7 +120,7 @@ int main(int argc, char** argv) {
         std::cout << "\nPlease enter a command:" << std::endl;
 
         // Wait for user response
-        std::getline (std::cin,command);
+        std::getline(std::cin, command);
 
         // Process the command entered
         if (curr_user == NULL) {
@@ -131,7 +132,7 @@ int main(int argc, char** argv) {
                 system("clear");
 
                 std::cout << "Please enter a valid username:" << std::endl;
-                std::getline (std::cin,command);
+                std::getline(std::cin, command);
 
                 curr_user = login(command);
                 if (curr_user == NULL) {
@@ -150,13 +151,13 @@ int main(int argc, char** argv) {
 
                 // prompts user to enter in the new user name of the account
                 std::cout << "Please enter the Username of the account you wish to create: \n";
-                std::getline (std::cin, new_account_name);
+                std::getline(std::cin,  new_account_name);
                 // prompts user to enter in the new account type
                 std::cout << "Please enter the account type of the account you wish to create (AA, FS, BS, SS): \n";
-                std::getline (std::cin, new_account_type);
+                std::getline(std::cin,  new_account_type);
                 // prompts user to enter in the new user name of the account
                 std::cout << "Please enter the initial credit of the account you wish to create: \n";
-                std::getline (std::cin, command);
+                std::getline(std::cin,  command);
 
                 // converts entered number from user to an integer
                 initial_credit = atoi(command.c_str());
@@ -210,7 +211,7 @@ int main(int argc, char** argv) {
 
                 // prompts user to enter in the user name of the account to delete
                 std::cout << "Please enter the Username of the account you wish to delete: \n";
-                std::getline (std::cin, deleted_account_name);
+                std::getline(std::cin,  deleted_account_name);
 
                 User* user_to_be_deleted = login(deleted_account_name);
 
@@ -251,12 +252,12 @@ int main(int argc, char** argv) {
                 std::string user_name;
                 std::cout << "Enter in the username you wish to add credit to" << std::endl;
 
-                std::getline(std::cin, user_name);
+                std::getline(std::cin,  user_name);
 
                 std::string credit_amount;
                 std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
-                std::getline(std::cin, credit_amount);
+                std::getline(std::cin,  credit_amount);
 
                 User* addCredit_user = login(user_name);
 
@@ -307,15 +308,15 @@ int main(int argc, char** argv) {
 
                 // prompts user to enter in event title
                 std::cout << "Please enter the Event title of the tickets you wish to buy: \n";
-                std::getline (std::cin,event_t);
+                std::getline(std::cin, event_t);
 
                 // prompts user to enter in seller username
                 std::cout << "Please enter the user name who you will buying from: " << std::endl;
-                std::getline (std::cin,seller_username);
+                std::getline(std::cin, seller_username);
 
                 // prompts user to enter in amount of tickets
                 std::cout << "Please enter in the amount of tickets you wish to buy: " << std::endl;
-                std::getline (std::cin,command);
+                std::getline(std::cin, command);
 
                 // converts entered number from user to an integer
                 num_of_tickets = atoi(command.c_str());
@@ -357,7 +358,7 @@ int main(int argc, char** argv) {
                   // takes in user choice
                   std::string choice;
                   std::cout << "Do you wish to complete this transaction yes or no " << std::endl;
-                  std::getline (std::cin,choice);
+                  std::getline(std::cin, choice);
                   if(choice == "yes"){
 
                     // log
@@ -410,15 +411,15 @@ int main(int argc, char** argv) {
                 std::cout << "Please enter the event title of the tickets you wish to sell."
                               "Max length is 25 Characters."
                           << std::endl;
-                std::getline(std::cin, event_t);
+                std::getline(std::cin,  event_t);
 
                 std::cout << "Please enter in the sale price." << std::endl;
 
-                std::getline(std::cin, sale_price);
+                std::getline(std::cin,  sale_price);
 
                 std::cout << "Please enter in the number of tickets you wish to sell" << std::endl;
 
-                std::getline(std::cin, num_of_tickets);
+                std::getline(std::cin,  num_of_tickets);
 
                 // error checking
                 if (event_t.length() > 25){
@@ -482,7 +483,7 @@ int main(int argc, char** argv) {
                 std::string credit_amount;
                 std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
-                std::getline(std::cin, credit_amount);
+                std::getline(std::cin,  credit_amount);
                 // error checking
                 if (atoi(credit_amount.c_str()) > 1000){
                   error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
