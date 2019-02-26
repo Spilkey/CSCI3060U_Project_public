@@ -37,16 +37,23 @@
 #include "tickets.h"
 #include "fileio.h"
 
+// I/O
 void log_transaction(std::string transaction);
 User* login(std::string username);
 Tickets* get_tickets(std::string event_title, std::string seller_username);
+
+// helper functions
 std::string int_to_log(int num, int length);
+std::string credit_to_log(float credit);
+
+// commands
 std::string createUser(User* curr_user);
 std::string deleteUser(User* curr_user);
 std::string refundUser(User* curr_user);
 std::string addCredit_Admin(User* curr_user);
 std::string buy(User* curr_user);
 std::string sell(User* curr_user);
+std::string addCredit_Standard(User* curr_user);
 
 
 std::vector<std::string> trans_log;
@@ -158,7 +165,7 @@ int main(int argc, char** argv) {
 
             } else if (acc_type == "AA" && command == "refund") {
                 // Run refund
-                system("clear");
+                error = refundUser(curr_user);
 
             } else if (acc_type == "AA" && command == "addcredit") {
                 error = addCredit_Admin(curr_user);
@@ -246,6 +253,27 @@ std::string int_to_log(int num, int length){
   return new_num;
 }
 
+/*
+* Function take a credit of  at most 8 significant digits and returns a padding string including 2 decimals
+* @param credit which will be padded
+* @return padded string with zeros
+*/
+std::string credit_to_log(float credit){
+    std::string left_side_credit_log = int_to_log((int)credit, 6);
+
+    // right side of credit
+    float rounded;
+    int right_side_credit = (int)((modf(credit, &rounded))*100);
+    std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+
+    return left_side_credit_log + "." + right_side_credit_log;
+}
+
+/*
+* Function runs the create command
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string createUser(User* curr_user){
     std::string error;
     std::string new_account_name;
@@ -292,17 +320,12 @@ std::string createUser(User* curr_user){
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
       // left side of credit
-      std::string left_side_credit_log = int_to_log(initial_credit, 6);
-
-      // right side of credit
-      float rounded;
-      int right_side_credit = (int)((modf(strtof(credit.c_str(),0), &rounded))*100);
-      std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+      std::string credit_log = credit_to_log(std::strtof(credit.c_str(),0));
 
       std::stringstream ss;
       ss << "01 " << new_account_name << " "
           << new_account_type << " "
-          << left_side_credit_log << "." << right_side_credit_log;
+          << credit_log << "\n";
       std::string log = ss.str();
 
       std::cout << log << std::endl; // debug for checking log
@@ -312,6 +335,11 @@ std::string createUser(User* curr_user){
   return error;
 }
 
+/*
+* Function runs the delete command
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string deleteUser(User* curr_user){
   // Run delete
   std::string error;
@@ -334,17 +362,12 @@ std::string deleteUser(User* curr_user){
   } else {
 
     // left side of credit
-    std::string left_side_credit_log = int_to_log((int)(user_to_be_deleted->getCredit()), 6);
-
-    // right side of credit
-    float rounded;
-    int right_side_credit = (int)((modf(user_to_be_deleted->getCredit(), &rounded))*100);
-    std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+    std::string credit_log = credit_to_log(user_to_be_deleted->getCredit());
 
     std::stringstream ss;
     ss << "02 " << user_to_be_deleted->getUserName() << " "
         << user_to_be_deleted->getUserType() << " "
-        << left_side_credit_log << "." << right_side_credit_log << "\n";
+        << credit_log << "\n";
     std::string log = ss.str();
 
     std::cout << log << std::endl; // debug for checking log
@@ -354,10 +377,78 @@ std::string deleteUser(User* curr_user){
   return error;
 }
 
+/*
+* Function runs the refund command
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string refundUser(User* curr_user){
-  return NULL;
+  std::string error;
+  std::string buyer_username;
+  std::string seller_username;
+  std::string credit;
+
+  system("clear");
+
+  std::cout << "Please enter the buyer's username" << std::endl;
+  std::getline(std::cin, buyer_username);
+
+  std::cout << "Please enter the seller's usernmae" << std::endl;
+  std::getline(std::cin, seller_username);
+
+  std::cout << "Please enter in the amount of credit to refund" << std::endl;
+  std::getline(std::cin, credit);
+
+  User* buyer = login(buyer_username);
+  User* seller = login(seller_username);
+
+  if(buyer == NULL){
+    error = "ERR: Buyer was not found\n";
+
+  } else if (seller == NULL){
+    error = "ERR: Seller was not found\n";
+
+  } else if (buyer->getUserType() == "SS"){
+    error = "ERR: buyer is not of type BB FS or AA\n";
+
+  } else if (seller->getUserType() == "BS"){
+    error = "ERR: seller is not of type SS FS or AA\n";
+
+  } else if (std::strtof(credit.c_str(),0) == 0){
+    error = "ERR: Cannot refund 0 credit\n";
+
+  } else if (std::strtof(credit.c_str(),0) < 0) {
+    error = "ERR: You cannot refund negative credit \n";
+
+  } else if (std::strtof(credit.c_str(),0) > 999999.99) {
+    error = "ERR: Cannot not refund more than the max credit\n";
+
+  } else if (std::strtof(credit.c_str(),0) > seller->getCredit()){
+    error = "ERR: Cannot refund more than your curent balance\n";
+
+  } else {
+
+    std::string credit_logged = credit_to_log(std::strtof(credit.c_str(),0));
+
+    std::stringstream ss;
+    ss << "05 " << buyer->getUserName() << " "
+        << seller->getUserName() << " "
+        << credit_logged<< "\n";
+    std::string log = ss.str();
+
+    log_transaction(log);
+
+    std::cout << log << std::endl;
+    error = "Refund Successful!\n";
+  }
+return error;
 }
 
+/*
+* Function runs the addcredit commands for admins
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string addCredit_Admin(User* curr_user){
   // Run addcredit for admins
   system("clear");
@@ -388,22 +479,17 @@ std::string addCredit_Admin(User* curr_user){
   } else if (credit_amount.length() == 0){
     error = "ERR: No value entered\n";
 
-  } else if ((strtof(credit_amount.c_str(),0)+curr_user->getCredit()) > 999999.99){
+  } else if ((std::strtof(credit_amount.c_str(),0)+addCredit_user->getCredit()) > 999999.99){
     error = "ERR: Can't exceed the max credit of 999999.99\n";
 
   } else {
-    // gets the left side of the credit and pads with 0's to be sent to the log file
-    std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(addCredit_user->getCredit()), 6);
 
-    // gets the 2 digits to the right of the decimal and converts them to a string
-    float rounded;
-    int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+addCredit_user->getCredit()), &rounded))*100);
-    std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0)+addCredit_user->getCredit());
 
     std::stringstream ss;
     ss << "06 " << addCredit_user->getUserName() << " "
        << addCredit_user->getUserType() << " "
-       << left_side_credit_log << "." << right_side_credit_log
+       << credit_log
        << "\n";
     std::string log = ss.str();
 
@@ -415,6 +501,11 @@ std::string addCredit_Admin(User* curr_user){
   return error;
 }
 
+/*
+* Function runs the buy command
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string buy(User* curr_user){
 
   std::string error;
@@ -521,6 +612,11 @@ std::string buy(User* curr_user){
   return error;
 }
 
+/*
+* Function runs the sell command
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string sell(User* curr_user){
   // Run sell
   system("clear");
@@ -601,6 +697,11 @@ std::string sell(User* curr_user){
   return error;
 }
 
+/*
+* Function runs the addcredit command for standard users
+* @param curr_user a instance of the current user for attaining data
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string addCredit_Standard(User* curr_user){
   system("clear");
   std::string error;
@@ -622,19 +723,13 @@ std::string addCredit_Standard(User* curr_user){
     error = "ERR: Can't exceed the max credit of 999999.99\n";
 
   } else {
-    // gets the left side of the credit and pads with 0's to be sent to the log file
-    std::string left_side_credit_log = int_to_log(atoi(credit_amount.c_str())+(int)(curr_user->getCredit()), 6);
 
-    // gets the 2 digits to the right of the decimal and converts them to a string
-    float rounded;
-    int right_side_credit = (int)((modf((strtof(credit_amount.c_str(),0)+curr_user->getCredit()), &rounded))*100);
-    std::string right_side_credit_log = int_to_log(right_side_credit, 2);
+    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0)+curr_user->getCredit());
 
     std::stringstream ss;
     ss << "06 " << curr_user->getUserName() << " "
        << curr_user->getUserType() << " "
-       << left_side_credit_log << "." << right_side_credit_log
-       << "\n";
+       << credit_log << "\n";
     std::string log = ss.str();
 
     std::cout << log << std::endl; // debug for checking log
