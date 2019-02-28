@@ -42,7 +42,7 @@
 ```
 make
 ```
-- Then run the compiled program using ./ticket-seller users.ua stock.at trans.out
+- Then run the compiled program using ./ticket-seller tests/users.ua tests/stock.at trans.out
 - Follow the instructions in the terminal to use the program (ex: login)
  	
 	
