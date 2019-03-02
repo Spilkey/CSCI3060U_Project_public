@@ -15,7 +15,7 @@ do
         ./ticket-seller users.ua stock.at $t/trans.out < $t/test.inp
         
         echo "TEST $t:" >> test_log.txt
-        diff $t/trans.out test.out >> test_log.txt
+        diff $t/trans.out $t/test.out >> test_log.txt
         echo $'\n' >> test_log.txt
     fi
  
