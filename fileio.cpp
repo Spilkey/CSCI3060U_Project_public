@@ -141,9 +141,23 @@ void FileIO::writeTransactions(std::vector<std::string> transactions){
     std::ofstream file; // The file to write to
     file.open(this->daily_trans_file, std::ios_base::app); // Open the file
 
+
+    // Check if the file has contents, if so append a new line
+    std::ifstream file_check;
+    file_check.open(this->daily_trans_file);
+    if(file_check.peek() == std::ifstream::traits_type::eof() == false){
+        file << std::endl;
+    }
+    file_check.close();
+
+
     // Print the elements in the array to the file
     for(int i = 0; i < transactions.size(); i++){
-        file << transactions[i] << "\n";
+        if(i != 0){
+             file << std::endl;
+        }
+        file << transactions[i];
+       
     }
 
     // Close the file
