@@ -3,5 +3,6 @@ user03
 create
 user05
 AA
-200logout
+200
+logout
 exit
