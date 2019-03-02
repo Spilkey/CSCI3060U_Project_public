@@ -143,7 +143,7 @@ void FileIO::writeTransactions(std::vector<std::string> transactions){
 
     // Print the elements in the array to the file
     for(int i = 0; i < transactions.size(); i++){
-        file << transactions[i];
+        file << transactions[i] << "\n";
     }
 
     // Close the file

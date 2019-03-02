@@ -1,6 +1,10 @@
 #ifndef fileio_H
 #define fileio_H
 
+#include "user.h"
+#include "tickets.h"
+class User;
+struct Tickets;
 /**
 * The FileIO class implements functions to read/write various files
 *

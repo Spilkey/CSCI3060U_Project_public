@@ -1,6 +1,10 @@
 #ifndef admin_H
 #define admin_H
 
+#include "fileio.h"
+#include "user.h"
+class FileIO;
+class User;
 /**
 * The admin class implements the functions that require elevated permissions
 *
@@ -18,10 +22,11 @@
 class Admin {
   public:
    Admin();
-   std::string createAccount(std::string temp_name, std::string account);
-   std::string deleteAccount(std::string temp_name);
-   std::string refund(std::string temp_name1, std::string temp_name2, int temp_credit);
-   std::string addCredit(int temp_credit, std::string temp_name);
+   std::string createUser(User* curr_user, std::vector<std::string> &trans_log);
+   std::string deleteUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
+
+   std::string refundUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
+   std::string addCredit_Admin(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
 };
 
 

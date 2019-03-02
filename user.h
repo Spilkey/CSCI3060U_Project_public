@@ -1,6 +1,11 @@
 #ifndef user_H
 #define user_H
 
+#include "admin.h"
+#include "fileio.h"
+
+class Admin; //forward delcaration
+struct FileIO;
 /**
 * @param user_name the users username
 * @param acc_type the type of account (AA, FS, BS, SS)
@@ -25,11 +30,15 @@ class User {
 
    public:
     User(std::string temp_name, int temp_credit, std::string account);
-    void addCredit(int tmp_credit);
 
     std::string getUserName();
     float getCredit();
     std::string getUserType();
+    Admin* getAdmin();
+
+    std::string buy(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
+    std::string sell(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
+    std::string addCredit_Standard(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
 };
 
 #endif
