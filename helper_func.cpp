@@ -1,3 +1,18 @@
+/*
+* The helper_func class holds functions that are necessary to run the Program
+* like login() and also functions that convert integers so that they can be written
+* to the log files like int_to_log()
+*
+* @method log_transaction takes transaction and places it into transaction array
+* @method login Checks if inputted username is valid
+* @method get_tickets calls function in FileIO class to read and return ticket
+* @method credit_to_log Adds padding to integers so they can be added to the log strings
+* @method int_to_log Takes credit of at most 8 sig digs and returns a padding string including 2 decimals
+*
+* @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
+* @version 0.1
+* @since 2019-03-02
+*/
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -59,7 +74,7 @@ std::string int_to_log(int num, int length){
 }
 
 /*
-* Function take a credit of  at most 8 significant digits and returns a padding string including 2 decimals
+* Function take a credit of at most 8 significant digits and returns a padding string including 2 decimals
 * @param credit which will be padded
 * @return padded string with zeros
 */

@@ -1,0 +1,1264 @@
+TEST tests/AddCredit_Completion_AA:
+1,8c1
+< 06 user02          FS 000100.00
+< 
+< 00
+< 06 user02          FS 000100.00
+< 
+< 00
+< 06 user02          FS 000100.00
+< 00
+---
+> 06 User02         FS 00000010000
+\ No newline at end of file
+
+
+TEST tests/AddCredit_Completion_BS:
+1,8c1
+< 06 user03          BS 000100.00
+< 
+< 00
+< 06 user03          BS 000100.00
+< 
+< 00
+< 06 user03          BS 000100.00
+< 00
+---
+> 06 User03         FS 00000010000
+\ No newline at end of file
+
+
+TEST tests/AddCredit_Completion_FS:
+1,8c1
+< 06 user02          FS 000100.00
+< 
+< 00
+< 06 user02          FS 000100.00
+< 
+< 00
+< 06 user02          FS 000100.00
+< 00
+---
+> 06 User02         FS 00000010000
+\ No newline at end of file
+
+
+TEST tests/AddCredit_Completion_SS:
+1,8c1
+< 06 user04          SS 000100.00
+< 
+< 00
+< 06 user04          SS 000100.00
+< 
+< 00
+< 06 user04          SS 000100.00
+< 00
+---
+> 06 User04         FS 00000010000
+\ No newline at end of file
+
+
+TEST tests/Addcredit_Account exist_AA:
+
+
+TEST tests/Addcredit_MaxCredit_amount:
+
+
+TEST tests/Addcredit_Neg_Amount:
+1,8c1
+< 06 user04          SS 00-100.00
+< 
+< 00
+< 06 user04          SS 00-100.00
+< 
+< 00
+< 06 user04          SS 00-100.00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Addcredit_entries_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Addcredit_entries_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Addcredit_entries_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Addcredit_entries_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Addcredit_max_amount:
+1,8c1
+< 06 user04          SS 001000.00
+< 
+< 00
+< 06 user04          SS 001000.00
+< 
+< 00
+< 06 user04          SS 001000.00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Buy_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_CPT_Display_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_CPT_Display_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_CPT_Display_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Confirm_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Confirm_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Confirm_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Current_Title_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Current_Title_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Current_Title_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Daily_Transaction:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Enough_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Enough_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Enough_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Event_Length_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Event_Length_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Event_Length_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Limit_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Limit_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Own_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Own_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Own_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Subtract_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Subtract_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Subtract_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Ticket_Cost_Display_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user02        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Ticket_Cost_Display_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Ticket_Cost_Display_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 04 airpods meetup            user01        004 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_Not_Entered_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_Not_Entered_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Buy_Username_Not_Entered_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Create_AA:
+1,8c1
+< 01 user05          AA 000200.00
+< 
+< 00
+< 01 user05          AA 000200.00
+< 
+< 00
+< 01 user05          AA 000200.00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_AA_credit_over_999999:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_AA_invalid_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_AA_same_username:
+1,7c1
+< 01 user01          AA 000200.00
+< 
+< 00
+< 01 user01          AA 000200.00
+< 
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_AA_too_long_username:
+1,2c1
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_BS:
+
+
+TEST tests/Create_BS_credit_over_999999:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_BS_invalid_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_BS_same_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_BS_too_long_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_FS_credit_over_999999:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_FS_invalid_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_FS_same_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_FS_too_long_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_SS_credit_over_999999:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_SS_invalid_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_SS_same_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Create_SS_too_long_username:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 0
+\ No newline at end of file
+
+
+TEST tests/Delete_AA:
+1,8c1
+< 02 user02          FS 000000.00
+< 
+< 00
+< 02 user02          FS 000000.00
+< 
+< 00
+< 02 user02          FS 000000.00
+< 00
+---
+> 02 user02          FS 000000.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_Daily_Transaction:
+1,8c1
+< 02 user02          FS 000000.00
+< 
+< 00
+< 02 user02          FS 000000.00
+< 
+< 00
+< 02 user02          FS 000000.00
+< 00
+---
+> 02 user02          FS 000000.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_Post_AA:
+1,11c1
+< 02 user02          FS 000000.00
+< 
+< 00
+< 00
+< 02 user02          FS 000000.00
+< 
+< 00
+< 00
+< 02 user02          FS 000000.00
+< 00
+< 00
+---
+> 02 user02          FS 000000.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_Self_AA:
+1,7c1
+< 02 user01          AA 000000.00
+< 
+< 00
+< 02 user01          AA 000000.00
+< 
+< 00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Delete_Valid_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 02 user05          FS 000000.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Logout_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_AA_other_transaction:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_BS_other_transaction:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FA 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_FS_other_transaction:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000000
+\ No newline at end of file
+
+
+TEST tests/Logout_SS_other_transaction:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000000
+\ No newline at end of file
+
+
+TEST tests/Refund_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 05 user03          user04          00000010000 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_Wrong_Buyer_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_Wrong_Seller_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_not_Current_User_Buyer_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Refund_not_Current_User_Seller_AA:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user01          AA 000000.0000 user03          BS 0000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_AA:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 03 airpods meetup            user01        026 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_BS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user03          BS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Daily_Transaction:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 03 airpods meetup            user01        026 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Event_Length_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Exists_AA:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 03 airpods meetup            user01        026 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Exists_FS:
+1,8c1
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 00
+---
+> 03 airpods meetup            user02        026 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Exists_SS:
+1,8c1
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 00
+---
+> 03 airpods meetup            user04        026 100.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_FS:
+1,8c1
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 00
+---
+> 03 airpods meetup            user02        026 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Post_AA:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 03 airpods meetup            user01        026 100.0004 airpods meetup            user01        010 100.0000 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Post_FS:
+1,8c1
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 00
+---
+> 03 airpods meetup            user02        026 100.0004 airpods meetup            user02        010 100.0000 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Post_SS:
+1,8c1
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 00
+---
+> 03 airpods meetup            user04        026 100.0004 airpods meetup            user04        010 100.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_AA:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_FS:
+1,8c1
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 
+< 00
+< 03 airpods meetup            user02          026 100.00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_Negative_AA:
+1,8c1
+< 03 airpods meetup            user01          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user01          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user01          026 -10.00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_Negative_FS:
+1,8c1
+< 03 airpods meetup            user02          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user02          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user02          026 -10.00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_Negative_SS:
+1,8c1
+< 03 airpods meetup            user04          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user04          026 -10.00
+< 
+< 00
+< 03 airpods meetup            user04          026 -10.00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Price_SS:
+1,8c1
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_SS:
+1,8c1
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 
+< 00
+< 03 airpods meetup            user04          026 100.00
+< 00
+---
+> 03 airpods meetup            user04        026 100.0000 user04          SS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Ticket_Number_AA:
+1,8c1
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 
+< 00
+< 03 airpods meetup            user01          026 100.00
+< 00
+---
+> 00 user01          AA 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Ticket_Number_FS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user02          FS 000000.00
+\ No newline at end of file
+
+
+TEST tests/Sell_Ticket_Number_SS:
+1,3c1
+< 00
+< 00
+< 00
+---
+> 00 user04          SS 000000.00
+\ No newline at end of file
+
+

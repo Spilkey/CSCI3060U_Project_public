@@ -57,7 +57,7 @@ FileIO* file_stream; // The backend class
 /*
 * This is the main method which handles the user input and calls the functions
 * @param args Unused (to be replaced with files)
-* @return Nothing
+* @return Nothing (technically an int since c++ requires the main to return something)
 */
 
 int main(int argc, char** argv) {
