@@ -15,6 +15,7 @@
 */
 #include <iostream>
 #include <vector>
+#include <regex>
 #include <math.h>
 #include "admin.h"
 #include "user.h"
@@ -38,8 +39,11 @@ void log_transaction(std::string transaction, std::vector<std::string> &trans_lo
 * @return User This returns a instance of the User class
 */
 User* login(std::string username, FileIO *file_stream) {
+    // Create the regex pattern
+    std::regex pattern("[ -~]+");
+
     // Check the username for valid characters
-    if (username.size() > 15 || username.size() <= 0) {
+    if (username.size() > 15 || username.size() <= 0 || !regex_match(username, pattern)) {
         return NULL;
     } else if (username.size() <= 15) {
         for(int i = username.size(); i < 15; i++){
