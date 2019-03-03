@@ -27,6 +27,7 @@
 * Takes a transaction and places it into the transaction array (increasing its size)
 * each element in the array will be written to the daily transaction file
 * @param transaction The transaction to log into the transaction file
+* @param trans_log a vector containing all transactions in this session
 * @return Nothing
 */
 void log_transaction(std::string transaction, std::vector<std::string> &trans_log) {
@@ -36,6 +37,7 @@ void log_transaction(std::string transaction, std::vector<std::string> &trans_lo
 /*
 * Takes a username, checks if it is valid, then calls a function in the FileIO class to search for the user
 * @param username The username entered
+* @param file_stream A pointer to an instance of FileIO
 * @return User This returns a instance of the User class
 */
 User* login(std::string username, FileIO *file_stream) {
@@ -59,6 +61,7 @@ User* login(std::string username, FileIO *file_stream) {
 * Calls the function in the FileIO class to read (and return) the ticket
 * @param event_title The title of the event that the user wants to purchase tickets for
 * @param seller_username The username of the user wanting to buy the ticket
+* @param file_stream A pointer to an instance of FileIO
 * @return Tickets This returns a instance of the Tickets struct
 */
 Tickets* get_tickets(std::string event_title, std::string seller_username, FileIO *file_stream){
@@ -83,6 +86,8 @@ std::string int_to_log(int num, int length){
 * @return padded string with zeros
 */
 std::string credit_to_log(float credit){
+  
+    // left side credit
     std::string left_side_credit_log = int_to_log((int)credit, 6);
 
     // right side of credit

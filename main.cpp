@@ -143,6 +143,7 @@ int main(int argc, char** argv) {
             }
         } else {
             if (acc_type == "AA" && command == "create") {
+              // calling getAdmin() to obtain admin commands
                 error = curr_user->getAdmin()->createUser(curr_user, trans_log, file_stream);
 
             } else if (acc_type == "AA" && command == "delete") {
@@ -155,6 +156,7 @@ int main(int argc, char** argv) {
                 error = curr_user->getAdmin()->addCredit_Admin(curr_user, trans_log, file_stream);
 
             } else if (acc_type != "SS" && command == "buy") {
+              // calling commands from user class
                 error = curr_user->buy(curr_user, trans_log, file_stream);
 
             } else if (acc_type != "BS" && command == "sell") {

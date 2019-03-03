@@ -26,6 +26,13 @@
 
 Admin::Admin() {}
 
+/*
+* Function runs the delete command
+* @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
+* @return a string containing the appropriate prompt after the command executes
+*/
 std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
     std::string error;
     std::string new_account_name;
@@ -80,12 +87,13 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
       error = "ERR: That username is already taken\n";
 
     } else {
-
+      // normalizes the username to be 15 characters
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
-      // left side of credit
+      // calling credit to convert the credit float to a log
       std::string credit_log = credit_to_log(std::strtof(credit.c_str(),0));
 
+      // creating the log
       std::stringstream ss;
       ss << "01 " << new_account_name << " "
           << new_account_type << " "
@@ -103,6 +111,8 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
 /*
 * Function runs the delete command
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string Admin::deleteUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
@@ -126,8 +136,10 @@ std::string Admin::deleteUser(User* curr_user, std::vector<std::string> &trans_l
     error = "ERR: User to be deleted does not exist in the database\n";
   } else {
 
+    // converting credit float to a string with the proper format
     std::string credit_log = credit_to_log(user_to_be_deleted->getCredit());
 
+    // creating the log
     std::stringstream ss;
     ss << "02 " << user_to_be_deleted->getUserName() << " "
         << user_to_be_deleted->getUserType() << " "
@@ -144,6 +156,8 @@ std::string Admin::deleteUser(User* curr_user, std::vector<std::string> &trans_l
 /*
 * Function runs the refund command
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string Admin::refundUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
@@ -192,8 +206,10 @@ std::string Admin::refundUser(User* curr_user, std::vector<std::string> &trans_l
 
   } else {
 
+    // coverting credit float ot string with correct format
     std::string credit_logged = credit_to_log(std::strtof(credit.c_str(),0));
 
+    // creating log
     std::stringstream ss;
     ss << "05 " << buyer->getUserName() << " "
         << seller->getUserName() << " "
@@ -211,6 +227,8 @@ return error;
 /*
 * Function runs the addcredit commands for admins
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
@@ -248,8 +266,10 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
 
   } else {
 
+    // coverting credit float to string with correct format
     std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0)+addCredit_user->getCredit());
 
+    // creating log
     std::stringstream ss;
     ss << "06 " << addCredit_user->getUserName() << " "
        << addCredit_user->getUserType() << " "

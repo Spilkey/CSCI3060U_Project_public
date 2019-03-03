@@ -2,10 +2,13 @@
 * The User class implements functions to handle various user-related functions
 * such as buy, sell, addCredit, etc.
 *
-* @method addCredit() adds credit to the current user
 * @method getUserName() returns user name of the current user
 * @method getCredit() returns credit of current user
 * @method getUserType() returns the user type (permissions) of the current user
+*
+* @method buy() returns a string of the error/prompt
+* @method sell() returns a string of the error/prompt
+* @method addCredit_Standard() returns a string of the error/prompt
 *
 * @author Kevin Desousa, Samuel Pilkey, and Daniel Bullock (Team JDK)
 * @version 0.1
@@ -34,11 +37,6 @@ User::User(std::string temp_name, int temp_credit, std::string account) {
     }
 }
 
-/*
-* Adds credit to the current user
-* @param tmp_credit The amount of credit to set the current user to
-*/
-
 std::string User::getUserName() {
     return user_name;
 }
@@ -58,6 +56,8 @@ Admin* User::getAdmin(){
 /*
 * Function runs the buy command
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
@@ -168,6 +168,8 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
 /*
 * Function runs the sell command
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
@@ -255,6 +257,8 @@ std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, Fil
 /*
 * Function runs the addcredit command for standard users
 * @param curr_user a instance of the current user for attaining data
+* @param trans_log is a vector all transaction from this seesion
+* @param file_stream a pointer to an instance of a FileIO class
 * @return a string containing the appropriate prompt after the command executes
 */
 std::string User::addCredit_Standard(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
