@@ -1,14 +1,17 @@
 #!/bin/bash
-#script to loop through directories to merge files
+# Script to loop through directories to merge files
 
 
 tests="tests/*"
 
-rm test_log.txt
-touch test_log.txt
+# Create files to contain the diff results and
+# The general results of which test passed
 
-rm test_verif.txt
-touch test_verif.txt
+rm diff_log.txt
+touch diff_log.txt
+
+rm test_results.txt
+touch test_results.txt
 
 for t in $tests
 do
@@ -25,20 +28,23 @@ do
         # Write a file documenting if the file is ok or not
         if diff $t/trans.out $t/test.out;
         then
-            echo "TEST $t: GOOD" >> test_verif.txt
+            echo "TEST $t: GOOD" >> test_results.txt
         else
-            echo "TEST $t: BAD" >> test_verif.txt
+            # If the file is not good document the issue
+            echo "TEST $t: BAD" >> test_results.txt
 
-            echo "TEST $t:" >> test_log.txt
-            diff $t/trans.out $t/test.out >> test_log.txt
-            echo $'\n' >> test_log.txt
+            echo "TEST $t:" >> diff_log.txt
+            diff $t/trans.out $t/test.out >> diff_log.txt
+            echo $'\n' >> diff_log.txt
 
         fi
 
 
-
+        # Remove the temporary transaction file
         rm $t/trans.out
     fi
+    
+    # Clear the terminal at the end of the run
     clear
 
 done
