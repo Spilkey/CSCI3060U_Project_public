@@ -53,9 +53,7 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
 
     User* check_user = login(new_account_name, file_stream);
     // Handling for entry errors from user
-    if ((new_account_name + (std::string(15 - new_account_name.length(), ' '))) == curr_user->getUserName()) {
-      error = "ERR: You cannot create use your own username for a new account \n";
-    } else if (initial_credit < 0) {
+    if (initial_credit < 0) {
       error = "ERR: You cannot give a user negative credit\n";
     } else if (initial_credit > 999999) {
       error = "ERR: You cannot give a user more than $999 999 credit\n";
@@ -70,14 +68,19 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
                new_account_type != "BS" &&
                new_account_type != "SS") {
       error = "ERR: New account type must be AA, FS, BS, or SS\n";
+
     // if not a regex match, invalid character
     } else if (!regex_match(new_account_name, pattern)) {
       error = "ERR: You entered an invalid character in your username \n";
+
+    } else if ((new_account_name + (std::string(15 - new_account_name.length(), ' '))) == curr_user->getUserName()) {
+      error = "ERR: You cannot create use your own username for a new account \n";
+
     } else if (check_user != NULL ) {
       error = "ERR: That username is already taken\n";
 
     } else {
-      std::cout << check_user->getUserName() << std::endl;
+
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
       // left side of credit
@@ -93,6 +96,7 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
       log_transaction(log, trans_log);
       error = "User created!\n";
   }
+  delete check_user;
   return error;
 }
 
@@ -231,7 +235,7 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
     error = "User was not found\n";
 
   } else if (atoi(credit_amount.c_str()) > 1000){
-    error = "ERR: Max credit of $1000 per session to be added exceeded\n";
+    error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
 
   } else if (atoi(credit_amount.c_str()) == 0 || atoi(credit_amount.c_str()) < 0){
     error = "ERR: Credit of $0 or below cannot be accepted\n";
