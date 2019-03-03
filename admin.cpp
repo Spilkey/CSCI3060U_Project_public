@@ -77,7 +77,6 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
       error = "ERR: That username is already taken\n";
 
     } else {
-      std::cout << check_user->getUserName() << std::endl;
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
       // left side of credit
