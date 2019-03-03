@@ -19,6 +19,8 @@ do
     # If its a directory, go inside of it
     if [ -d "$t" ]
     then
+        # Make sure the test file exists
+        touch $t/trans.out
 
         # Run the script and dump the output in the folder to be compared
         ./ticket-seller tests/users.ua tests/stock.at $t/trans.out < $t/test.inp
