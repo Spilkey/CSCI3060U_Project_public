@@ -692,7 +692,7 @@ addcredit
 user04
 1000000
 logout",00
-Addcredit_MaxCredit_amount,"Login
+Addcredit_MaxCredit_amount,"login
 user01
 addcredit
 UserCreditMax
