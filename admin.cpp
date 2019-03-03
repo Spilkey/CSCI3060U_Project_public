@@ -70,11 +70,9 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
                new_account_type != "BS" &&
                new_account_type != "SS") {
       error = "ERR: New account type must be AA, FS, BS, or SS\n";
-
     // if not a regex match, invalid character
     } else if (!regex_match(new_account_name, pattern)) {
       error = "ERR: You entered an invalid character in your username \n";
-
     } else if (check_user != NULL ) {
       error = "ERR: That username is already taken\n";
 
@@ -233,7 +231,7 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
     error = "User was not found\n";
 
   } else if (atoi(credit_amount.c_str()) > 1000){
-    error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
+    error = "ERR: Max credit of $1000 per session to be added exceeded\n";
 
   } else if (atoi(credit_amount.c_str()) == 0 || atoi(credit_amount.c_str()) < 0){
     error = "ERR: Credit of $0 or below cannot be accepted\n";

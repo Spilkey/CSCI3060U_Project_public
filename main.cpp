@@ -38,11 +38,9 @@
 #include "fileio.h"
 #include "helper_func.h"
 
-
 std::string buy(User* curr_user);
 std::string sell(User* curr_user);
 std::string addCredit_Standard(User* curr_user);
-
 
 std::vector<std::string> trans_log;
 

@@ -109,7 +109,6 @@ Tickets* FileIO::readTickets(std::string event_title, std::string seller_usernam
             std::string file_event (line.begin(), line.begin()+25);
             std::string file_seller (line.begin()+26, line.begin()+41);
 
-
             // if the seller username and event title is found
             if((seller_username == file_seller) && (event_title == file_event)){
                 found = true;
@@ -141,7 +140,6 @@ void FileIO::writeTransactions(std::vector<std::string> transactions){
     std::ofstream file; // The file to write to
     file.open(this->daily_trans_file, std::ios_base::app); // Open the file
 
-
     // Check if the file has contents, if so append a new line
     std::ifstream file_check;
     file_check.open(this->daily_trans_file);
@@ -149,7 +147,6 @@ void FileIO::writeTransactions(std::vector<std::string> transactions){
         file << std::endl;
     }
     file_check.close();
-
 
     // Print the elements in the array to the file
     for(int i = 0; i < transactions.size(); i++){
