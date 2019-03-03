@@ -28,14 +28,14 @@ do
         # Write a file documenting if the file is ok or not
         if diff $t/trans.out $t/test.out;
         then
-            echo "TEST $t: GOOD" >> test_verif.txt
+            echo "TEST $t: GOOD" >> test_results.txt
         else
             # If the file is not good document the issue
-            echo "TEST $t: BAD" >> test_verif.txt
+            echo "TEST $t: BAD" >> test_results.txt
 
-            echo "TEST $t:" >> test_log.txt
-            diff $t/trans.out $t/test.out >> test_log.txt
-            echo $'\n' >> test_log.txt
+            echo "TEST $t:" >> diff_log.txt
+            diff $t/trans.out $t/test.out >> diff_log.txt
+            echo $'\n' >> diff_log.txt
 
         fi
 
