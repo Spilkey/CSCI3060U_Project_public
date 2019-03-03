@@ -157,7 +157,6 @@ void FileIO::writeTransactions(std::vector<std::string> transactions){
              file << std::endl;
         }
         file << transactions[i];
-       
     }
 
     // Close the file

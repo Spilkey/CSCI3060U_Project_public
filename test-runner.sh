@@ -15,12 +15,12 @@ do
 
     # If its a directory, go inside of it
     if [ -d "$t" ]
-    then 
+    then
 
         # Run the script and dump the output in the folder to be compared
         ./ticket-seller tests/users.ua tests/stock.at $t/trans.out < $t/test.inp
-        
-        
+
+
 
         # Write a file documenting if the file is ok or not
         if diff $t/trans.out $t/test.out;
@@ -28,7 +28,7 @@ do
             echo "TEST $t: GOOD" >> test_verif.txt
         else
             echo "TEST $t: BAD" >> test_verif.txt
-            
+
             echo "TEST $t:" >> test_log.txt
             diff $t/trans.out $t/test.out >> test_log.txt
             echo $'\n' >> test_log.txt
@@ -40,5 +40,5 @@ do
         rm $t/trans.out
     fi
     clear
- 
+
 done

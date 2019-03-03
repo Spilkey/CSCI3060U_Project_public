@@ -145,7 +145,7 @@ int main(int argc, char** argv) {
             }
         } else {
             if (acc_type == "AA" && command == "create") {
-                error = curr_user->getAdmin()->createUser(curr_user, trans_log);
+                error = curr_user->getAdmin()->createUser(curr_user, trans_log, file_stream);
 
             } else if (acc_type == "AA" && command == "delete") {
                 error = curr_user->getAdmin()->deleteUser(curr_user, trans_log, file_stream);

@@ -26,7 +26,7 @@
 
 Admin::Admin() {}
 
-std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_log){
+std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream){
     std::string error;
     std::string new_account_name;
     std::string new_account_type;
@@ -51,6 +51,7 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
     // goes from space to ~
     std::regex pattern("[ -~]+");
 
+    User* check_user = login(new_account_name, file_stream);
     // Handling for entry errors from user
     if ((new_account_name + (std::string(15 - new_account_name.length(), ' '))) == curr_user->getUserName()) {
       error = "ERR: You cannot create use your own username for a new account \n";
@@ -64,16 +65,21 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
       error = "ERR: You did not enter in any value for the new username\n";
     } else if (new_account_type.length() == 0) {
       error = "ERR: You did not enter in any value for the new user account type\n";
-    } else if (new_account_type == "AA" ||
-               new_account_type == "FS" ||
-               new_account_type == "BS" ||
-               new_account_type == "SS") {
+    } else if (new_account_type != "AA" &&
+               new_account_type != "FS" &&
+               new_account_type != "BS" &&
+               new_account_type != "SS") {
       error = "ERR: New account type must be AA, FS, BS, or SS\n";
 
     // if not a regex match, invalid character
     } else if (!regex_match(new_account_name, pattern)) {
       error = "ERR: You entered an invalid character in your username \n";
+
+    } else if (check_user != NULL ) {
+      error = "ERR: That username is already taken\n";
+
     } else {
+      std::cout << check_user->getUserName() << std::endl;
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
       // left side of credit

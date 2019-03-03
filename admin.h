@@ -22,7 +22,7 @@ class User;
 class Admin {
   public:
    Admin();
-   std::string createUser(User* curr_user, std::vector<std::string> &trans_log);
+   std::string createUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
    std::string deleteUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
 
    std::string refundUser(User* curr_user, std::vector<std::string> &trans_log, FileIO* file_stream);
