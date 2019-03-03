@@ -24,7 +24,6 @@
 #include "fileio.h"
 #include "helper_func.h"
 
-
 Admin::Admin() {}
 
 std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_log){
@@ -56,20 +55,25 @@ std::string Admin::createUser(User* curr_user, std::vector<std::string> &trans_l
     if ((new_account_name + (std::string(15 - new_account_name.length(), ' '))) == curr_user->getUserName()) {
       error = "ERR: You cannot create use your own username for a new account \n";
     } else if (initial_credit < 0) {
-      error = "ERR: You cannot give a user negative credit \n";
+      error = "ERR: You cannot give a user negative credit\n";
     } else if (initial_credit > 999999) {
-      error = "ERR: You cannot give a user more than 999 999 credit \n";
+      error = "ERR: You cannot give a user more than $999 999 credit\n";
     } else if (new_account_name.length() > 15) {
-      error = "ERR: You cannot give a user a name over 15 characters \n";
+      error = "ERR: You cannot give a user a name over 15 characters\n";
     } else if (new_account_name.length() == 0) {
       error = "ERR: You did not enter in any value for the new username\n";
     } else if (new_account_type.length() == 0) {
       error = "ERR: You did not enter in any value for the new user account type\n";
+    } else if (new_account_type == "AA" ||
+               new_account_type == "FS" ||
+               new_account_type == "BS" ||
+               new_account_type == "SS") {
+      error = "ERR: New account type must be AA, FS, BS, or SS\n";
+
     // if not a regex match, invalid character
     } else if (!regex_match(new_account_name, pattern)) {
       error = "ERR: You entered an invalid character in your username \n";
     } else {
-
       new_account_name += (std::string(15 - new_account_name.length(), ' '));
 
       // left side of credit
@@ -114,7 +118,6 @@ std::string Admin::deleteUser(User* curr_user, std::vector<std::string> &trans_l
     error = "ERR: User to be deleted does not exist in the database\n";
   } else {
 
-    //
     std::string credit_log = credit_to_log(user_to_be_deleted->getCredit());
 
     std::stringstream ss;
@@ -226,14 +229,14 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
   } else if (atoi(credit_amount.c_str()) > 1000){
     error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
 
-  } else if (atoi(credit_amount.c_str()) == 0){
-    error = "ERR: Credit of $0 cannot be accepted\n";
+  } else if (atoi(credit_amount.c_str()) == 0 || atoi(credit_amount.c_str()) < 0){
+    error = "ERR: Credit of $0 or below cannot be accepted\n";
 
   } else if (credit_amount.length() == 0){
     error = "ERR: No value entered\n";
 
   } else if ((std::strtof(credit_amount.c_str(),0)+addCredit_user->getCredit()) > 999999.99){
-    error = "ERR: Can't exceed the max credit of 999999.99\n";
+    error = "ERR: Can't exceed the max credit of $999999.99\n";
 
   } else {
 

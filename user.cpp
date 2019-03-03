@@ -94,9 +94,9 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
   make a normalizer function for main.cpp and fileio.cpp to use
   */
   // normalizes the user name to 15 chars
-  if(seller_username.length() < 15 ){
+  if(seller_username.length() < 15 ) {
       seller_username += (std::string(15 - seller_username.length(), ' '));
-                    }
+  }
   // Handling for entry errors from user
   if(current_tickets == NULL){
     error = "ERR: The information entered was not valid \n";
@@ -107,14 +107,13 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
   }else if(num_of_tickets > 4 && curr_user->getUserType() != "AA"){
     error = "ERR: You cannot purchase more than 4 tickets \n";
 
-  }else if(num_of_tickets <= 0){
-    error = "ERR: You cannot purchace 0 tickets \n";
+  }else if(num_of_tickets < 1){
+    error = "ERR: You cannot purchase less than 1 ticket \n";
 
   }else if(current_tickets->total_tickets < num_of_tickets){
-    error = "ERR: You cannot purchace more than the total amount of tickets \n";
+    error = "ERR: You cannot purchase more than the total amount of tickets \n";
 
   }else{
-
     std::cout << "The cost per ticket is " << current_tickets->price
     << "\nThe total cost for this transaction is "<< num_of_tickets*current_tickets->price << std::endl;
 
@@ -208,13 +207,16 @@ std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, Fil
   } else if (atoi(sale_price.c_str()) == 0){
     error = "ERR: You entered invalid input for the sale price\n";
 
+  } else if (atoi(sale_price.c_str()) < 0){
+    error = "ERR: You entered negative input for the sale price\n";
+
   } else if (atoi(num_of_tickets.c_str()) > 100) {
     error = "ERR: You cannot sell more than 100 tickets \n";
 
   } else if (num_of_tickets.length() == 0){
     error = "ERR: You did not enter in any value for the number of tickets\n";
 
-  } else if (atoi(num_of_tickets.c_str()) == 0){
+  } else if (atoi(num_of_tickets.c_str()) == 0 || atoi(num_of_tickets.c_str()) < 0){
     error = "ERR: You entered invalid input for the number of tickets\n";
 
   } else {
@@ -222,7 +224,6 @@ std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, Fil
     // normalizing event title
     if (event_t.length() < 25 ){
         event_t += (std::string(25 - event_t.length(), ' '));
-
     }
 
     // converts remaining numbner of tickets to string and adds padding
@@ -246,7 +247,7 @@ std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, Fil
     std::cout << log << std::endl; // debug for checking log
 
     log_transaction(log, trans_log);
-    error = "Successfully added ticket. Ticket will be processed and will be available next seesion\n";
+    error = "Successfully added ticket. Ticket will be processed and will be available next session\n";
   }
   return error;
 }
@@ -265,16 +266,16 @@ std::string User::addCredit_Standard(User* curr_user, std::vector<std::string> &
   std::getline(std::cin,  credit_amount);
   // error checking
   if (atoi(credit_amount.c_str()) > 1000){
-    error = "ERR: Max credit of $1000 per seesion to be added exceeded\n";
+    error = "ERR: Max credit of $1000 per session to be added exceeded\n";
 
-  } else if (atoi(credit_amount.c_str()) == 0){
-    error = "ERR: Credit of $0 cannot be accepted\n";
+  } else if (atoi(credit_amount.c_str()) == 0 || atoi(credit_amount.c_str()) < 0){
+    error = "ERR: Credit of $0 or below cannot be accepted\n";
 
   } else if (credit_amount.length() == 0){
     error = "ERR: No value entered\n";
 
   } else if ((strtof(credit_amount.c_str(),0)+curr_user->getCredit()) > 999999.99){
-    error = "ERR: Can't exceed the max credit of 999999.99\n";
+    error = "ERR: Can't exceed the max credit of $999999.99\n";
 
   } else {
 
