@@ -45,4 +45,11 @@ make
 - Then run the compiled program using ./ticket-seller tests/users.ua tests/stock.at trans.out
 - Follow the instructions in the terminal to use the program (ex: login)
  	
+# To run our specified tests:
+
+- Make sure you have the updated tests.csv file, and the .sh script test-runner.sh
+- Make sure the test-runner.sh has permissions with chmod
+- Run the script using ./test-runner.sh (linux bash)
+- The diff_log.txt shows what the difference between the test.out and trans.out files, (using the diff command)
+- The test_results.txt file shows every test and whether the test was successful or not with the words (GOOD/BAD)
 	
